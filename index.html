@@ -325,7 +325,7 @@
 				x.scrollTop = x.scrollHeight;
 			});
 
-			$userForm.submit(function(e){
+			$("#login").click(function(e){
 				e.preventDefault();
 				socket.emit('new user', $username.val(), $avatarLink.val(), true, function(data){
 					if(data)
