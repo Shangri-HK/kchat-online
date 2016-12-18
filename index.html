@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>K'chat</title>
+	<link rel="icon" type="image/png" href="http://i.imgur.com/3af1CUX.png" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+	<script src="/socket.io/socket.io.js"></script>
+	<style>
+		body
+		{
+			margin-left: auto;
+    		margin-right: auto;
+			font-family: Arial, Helvetica, sans-serif;
+			background: url("http://i.imgur.com/Dg1KtDt.jpg");
+			background-color: white;
+
+		}
+		#messageArea
+		{
+			display: none;
+		}
+		#userFormArea
+		{
+			background: rgba(204,204,204,0.7);
+			border: 1px solid white;
+			border-radius: 0px 10px 0 20px;
+			box-shadow: 0px 0px 40px rgba(250,250,250,0.50);
+			width: 600px;
+			margin: 0 auto;
+			margin-top: 130px;
+			
+		}
+		#userList
+		{
+
+			background-repeat: no-repeat;
+			background-position: center;
+			background: rgba(204,204,204,0.9);
+			background-size: 360px 600px;
+			border: 1px solid white;
+			border-radius: 0px 10px 0 20px;
+			box-shadow: 0px 0px 40px rgba(250,250,250,0.50);
+			width: 200px;
+			height: 600px;
+			margin: 0 auto;
+
+		}
+		#users
+		{
+			height: 350px;
+			overflow: auto;
+			margin-bottom: 10px;
+		}
+		#usersCol
+		{
+			background: rgba(204,204,204,0);
+			border: none;
+		}
+		#settings
+		{
+			margin-top: 162px;
+			border-radius: 0px 10px 0 20px;
+			border: 1px solid #FA7F7F;
+			background-color: #FA4D4D;
+			width: 165px;
+		}
+		#settings:hover
+		{
+			background-color: #8E2E2E;
+		}
+		#ok
+		{
+			margin-top: 619px;
+			border-radius: 0px 10px 0 20px;
+			border: 1px solid #FA7F7F;
+			background-color: #FA4D4D;
+			width: 165px;
+		}
+		#ok:hover
+		{
+			background-color: #8E2E2E;
+		}
+		#login
+		{
+			background-color: #FA4D4D;
+		}
+		#chat
+		{
+			box-shadow: 0px 0px 40px rgba(250,250,250,0.50);
+			background: rgba(204,204,204,0.9);
+			border-radius: 0px 10px 0 20px;
+			border: 1px solid white;
+			height: 600px;
+			width: 1000px;
+			overflow:auto;
+		}
+		#chatWindow
+		{
+			margin-bottom: 10px;
+		}
+		#message
+		{
+			width: 1000px;
+			margin-top: 10px;
+			height: 100px;
+			border-radius: 0px 10px 0 20px;
+		}
+		#affichage
+		{
+			background: rgba(204,204,204,0);
+    		overflow: auto;
+    		word-wrap: break-word;
+    		text-align: justify;
+   			height : auto;
+     		list-style-type:none;
+   			font-family: Arial, Helvetica, sans-serif;
+		}
+		#avatar
+		{
+			width : 50px; 
+			height: 50px;
+			box-shadow: 0px 0px 10px rgba(0,0,0,0.70);
+			margin-right: 10px;
+			float: left;
+		}
+		#avatar:hover
+		{
+			width:100px;
+			height:100px;
+		}
+		#avatarChange
+		{
+			margin-top: 10px;
+			margin-left: 10px;
+		}
+		#banner
+		{
+			border-top: 1px solid white;
+		}
+		#youtube:hover
+		{
+			width:700px;
+			height:auto;
+		}
+		#avatarSelect
+		{
+			width: 100px;
+			height: 34px;
+			flex-wrap: wrap;
+			float: left;
+		}
+		#header
+		{
+			position: top;
+			vertical-align: top;
+			margin-top: 0px;
+			height: 50px;
+			width: auto;
+			background-color: #FA4D4D;
+		}
+		#container
+		{
+			margin-top: 50px;
+		}
+		#logo
+		{
+			vertical-align: top;
+			height: 40px;
+			margin-top: 5px;
+			margin-left: 10px;
+		}
+		#pseudo
+		{
+			width:130px;
+			height: 42px;
+			overflow: hidden;
+		}
+		#image
+		{
+			width:130px;
+			height: 42px;
+			overflow: hidden;
+		}
+		h1
+		{
+			margin-left: auto;
+    		margin-right: auto;
+    		text-align: center;
+			font-family: 'Courier New', Courier, monospace;
+			font-size: 13px;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<div id="header">
+		<a href="localhost:3000"><img src="http://i.imgur.com/YdtPdfU.png" id="logo"/></a>
+	</div>
+	<div class="container" id="container">
+		<div id="userFormArea" class="row">
+			<div class="col-md-12">
+				<form id="userForm">
+					<div class="form-group">
+						<label style="color: white">Enter Username</label>
+						<input class="form-control" id="username" />
+						<br />
+						<label style="color: white">Avatar Link</label>
+						<input class="form-control" id="avatarLink" /><br />
+						<input type="submit" id="login" class="btn btn-primary" value="Login" /><br />
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="messageArea" class="row">
+			<div class="col-md-4" id="userList">
+				<form class="col-md-2" id="config" style="display: none;">
+					<label style="color: white">Username</label>
+					<textarea class="form-control" id="pseudo"></textarea>
+					<label style="color: white">Avatar</label>
+					<textarea class="form-control" id="image"></textarea>
+				</form>
+				<input type="button" id="ok" class="btn btn-primary" value="OK" style="display: none;" onclick="changeInfo()" />
+				<div class="well" id="usersCol">
+					<h4>Online Users</h4>
+					<ul class="list-group" id="users"></ul>
+				</div>
+				<input type="button" id="settings" class="btn btn-primary" value="Settings"  onclick="showConfig()" />
+			</div>
+			<div class="col-md-8" id="chatWindow">
+				<ul class="list-group" id="chat"></ul>
+				<form id="messageForm">
+					<div class="form-group">
+						<textarea class="form-control" id="message"></textarea>
+						<br />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>		
+		var socket = io.connect();
+		var $messageForm = $('#messageForm');
+		var $message = $('#message');
+		var $chat = $('#chat');
+		var $userForm = $('#userForm');
+		var $messageArea = $('#messageArea');
+		var $userFormArea = $('#userFormArea');
+		var $users = $('#users');
+		var $username = $('#username');
+		var $settings = $('#settings');
+		var $config = $('#config');
+		var $avatarLink = $('#avatarLink');
+		var $image = '';
+		var $pseudo = 'Random';
+		var $prevImage;
+		var $prevPseudo = '';
+
+		$username.val(readCookie("username"));
+		$avatarLink.val(readCookie("avatar"));
+		function showConfig()
+		 {
+
+   			document.getElementById('config').style.display = "block";
+   			document.getElementById('ok').style.display = "block";
+   			document.getElementById('usersCol').style.display = "none";
+   			document.getElementById('settings').style.display = "none";
+   			document.getElementById('image').value = $image;
+   			document.getElementById('pseudo').value = $pseudo;
+   			$prevImage = $image;
+   			$prevPseudo = $pseudo;
+		}
+		function changeInfo()
+		{
+			$image = document.getElementById('image').value;
+			$pseudo = document.getElementById('pseudo').value;
+			/*socket.on('get users', function(data){
+				var html = '';
+				for(i = 0; i < data.length; i++)
+				{
+						html += '<li class="list-group-item">ntm</li>';
+				}
+				$users.html(html);
+			});*/
+			/*socket.emit('new user', $pseudo.val(), $image.val(), true, function(data){
+					if(data)
+					{
+					}
+				});*/
+			socket.emit('send message', $pseudo.toString(), $image.toString(), false);
+			createCookie("username", $pseudo);
+			createCookie("avatar", $image);
+			document.getElementById('config').style.display = "none";
+   			document.getElementById('ok').style.display = "none";
+   			document.getElementById('usersCol').style.display = "block";
+   			document.getElementById('settings').style.display = "block";
+   			document.getElementById('settings').style.marginTop = "182px";
+		}
+		function createCookie(name,value) {
+			document.cookie = name+"="+value;
+		}
+		function readCookie(name) {
+			var nameEQ = name + "=";
+			var ca = document.cookie.split(';');
+			for( var i=0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') c = c.substring(1,c.length);
+				if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			}
+			return null;
+		}
+		$(function(){
+
+
+			$messageForm.submit(function(e){
+				e.preventDefault();
+				socket.emit('send message', $message.val(), null, true);
+				$message.val('');
+			});
+
+			socket.on('new message', function(data){
+				$chat.append('<li class="list-group-item" id="affichage"><img src="' + data.avatar + '" id="avatar"/><strong>' + data.user + '</strong><br />' + data.msg +'</li>')
+				var x = document.getElementById('chat'); 
+				x.scrollTop = x.scrollHeight;
+			});
+
+			$userForm.submit(function(e){
+				e.preventDefault();
+				socket.emit('new user', $username.val(), $avatarLink.val(), true, function(data){
+					if(data)
+					{
+						$userFormArea.hide();
+						$messageArea.show();
+					}
+				});
+				$pseudo = $username.val();
+				$image = $avatarLink.val();
+				createCookie("username", $pseudo);
+				createCookie("avatar", $image);
+				document.getElementById('pseudo').value = $username.val();
+				$username.val('');
+			});
+
+			socket.on('get users', function(data){
+				var html = '';
+				for(i = 0; i < data.length; i++)
+				{
+					html += '<li class="list-group-item">' + data[i] + '</li>';
+				}
+				$users.html(html);
+			});
+		});
+		$("#message").keypress(function (e) {
+    		if(e.which == 13 && !e.shiftKey) 
+    		{        
+        		$(this).closest("form").submit();
+        		e.preventDefault();
+        		return false;
+   			}
+		});
+		$("#image").keypress(function (e) {
+    		if(e.which == 13 && !e.shiftKey) 
+    		{        
+        		return false;
+   			}
+		});
+		$("#pseudo").keypress(function (e) {
+    		if(e.which == 13 && !e.shiftKey) 
+    		{        
+        		return false;
+   			}
+		});
+	</script>
+</body>
+</html>
