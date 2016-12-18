@@ -13,8 +13,6 @@
     		margin-right: auto;
 			font-family: Arial, Helvetica, sans-serif;
 			background: url("http://i.imgur.com/Dg1KtDt.jpg");
-			background-color: white;
-
 		}
 		#messageArea
 		{
@@ -134,10 +132,6 @@
 			margin-top: 10px;
 			margin-left: 10px;
 		}
-		#banner
-		{
-			border-top: 1px solid white;
-		}
 		#youtube:hover
 		{
 			width:700px;
@@ -182,6 +176,54 @@
 			height: 42px;
 			overflow: hidden;
 		}
+		#cinema
+		{
+			width: 1215px;
+			height: 600px;
+			box-shadow: 0px 0px 10px rgba(0,0,0,0.70);
+			background: rgba(0, 00, 0, 0.5);
+			border: 1px solid grey;
+			border-radius: 0px 10px 0 20px;
+			margin-bottom: 200px;
+			overflow: visible;
+
+		}
+		#youtubeSubmit
+		{
+			border-radius: 0px 10px 0 20px;
+			border: 1px solid #FA7F7F;
+			background-color: #8E2E2E;
+			width: 175px;
+			margin-left: 20px
+		}
+		#youtubeSubmit:hover
+		{
+			background-color: #8E2E2E;
+		}
+		#cinemaOn
+		{
+			border-radius: 10px 0px 20px 0px;
+			border: 1px solid #FA7F7F;
+			background-color: #FA4D4D;
+			width: 165px;
+			margin-bottom: 20px;			
+		}
+		#cinemaOn:hover
+		{
+			background-color: #8E2E2E;	
+		}
+		#youtubeForm
+		{
+			margin-top: 20px;
+		}
+		#cinemaOut
+		{
+			width: 1215px;
+			border-radius: 0 0 0 0;
+			background-color: #222222;
+			margin-top: 40px;
+			border: none;
+		}
 		h1
 		{
 			margin-left: auto;
@@ -193,11 +235,21 @@
 		}
 	</style>
 </head>
-<body>
+<body id="body">
 	<div id="header">
-		<a href="localhost:3000"><img src="http://i.imgur.com/YdtPdfU.png" id="logo"/></a>
+		<a href="kchat-online.herokuapp.com"><img src="http://i.imgur.com/YdtPdfU.png" id="logo"/></a>
 	</div>
 	<div class="container" id="container">
+		<input type="submit" id="cinemaOn" class="btn btn-primary" value="Show cinema mode"  style="display: none;" onclick="cinemaOn()" /><br />
+		<div id="cinema" style="display:none;"/>
+			<iframe  id="youtubeWindow" width="1000" height="500" src="https://www.youtube.com/embed/" style="margin-top: 20px; margin-left: 102px;"></iframe><br />
+			<div id="youtubeForm">
+				<input class="form-control" id="youtubeLink" style="width:800px; float:left; margin-left: 102px; background-color: grey;"/>
+				<input type="submit" id="youtubeSubmit" class="btn btn-primary" value="OK"  onclick="launchVideo()" />
+			</div>
+			<input type="submit" id="cinemaOut" class="btn btn-primary" value="Hide cinema mode"  onclick="cinemaOut()" />
+		</div>
+
 		<div id="userFormArea" class="row">
 			<div class="col-md-12">
 				<form id="userForm">
@@ -239,7 +291,9 @@
 			</div>
 		</div>
 	</div>
-	<script>		
+
+	<script>
+	//<div id="darker" style="width: 4000px; height: 4000px; background: rgba(0,0,0,0.5); position: absolute;"> </div>		
 		var socket = io.connect();
 		var $messageForm = $('#messageForm');
 		var $message = $('#message');
@@ -256,9 +310,25 @@
 		var $pseudo = 'Random';
 		var $prevImage;
 		var $prevPseudo = '';
+		var $cinema = $('#cinema');
+		var $youtubeLink = $('#youtubeLink');
 
 		$username.val(readCookie("username"));
 		$avatarLink.val(readCookie("avatar"));
+
+		function cinemaOn()
+		{
+			$('#cinema').fadeIn();
+			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(http://i.imgur.com/Dg1KtDt.jpg)'});
+			$('#cinemaOn').fadeOut();
+		}
+
+		function cinemaOut()
+		{
+			$('#cinema').fadeOut();
+			$('#cinemaOn').fadeIn();
+			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(http://i.imgur.com/Dg1KtDt.jpg)'});
+		}
 		function showConfig()
 		 {
 
@@ -266,15 +336,25 @@
    			document.getElementById('ok').style.display = "block";
    			document.getElementById('usersCol').style.display = "none";
    			document.getElementById('settings').style.display = "none";
-   			document.getElementById('image').value = $image;
-   			document.getElementById('pseudo').value = $pseudo;
+   			document.getElementById('image').value = escapeHtml($image);
+   			document.getElementById('pseudo').value = escapeHtml($pseudo);
    			$prevImage = $image;
    			$prevPseudo = $pseudo;
 		}
+		function launchVideo()
+		{
+			var link = $youtubeLink.val();
+			var embed = link.split('/');
+			for (var i = 0; i < embed.length; i++)
+			{
+				if (embed[i] == "www.youtube.com")
+					document.getElementById('youtubeWindow').src = "https://www.youtube.com/embed/" + embed[i+1].split('=')[1].split('&')[0];
+			}
+		}
 		function changeInfo()
 		{
-			$image = document.getElementById('image').value;
-			$pseudo = document.getElementById('pseudo').value;
+			$image = escapeHtml(document.getElementById('image').value);
+			$pseudo = escapeHtml(document.getElementById('pseudo').value);
 			/*socket.on('get users', function(data){
 				var html = '';
 				for(i = 0; i < data.length; i++)
@@ -298,7 +378,7 @@
    			document.getElementById('settings').style.marginTop = "182px";
 		}
 		function createCookie(name,value) {
-			document.cookie = name+"="+value;
+			document.cookie = name+"="+escapeHtml(value);
 		}
 		function readCookie(name) {
 			var nameEQ = name + "=";
@@ -326,27 +406,29 @@
 
 			$messageForm.submit(function(e){
 				e.preventDefault();
-				socket.emit('send message', $message.val(), null, true);
+				socket.emit('send message', escapeHtml($message.val()), null, true);
 				$message.val('');
 			});
 
 			socket.on('new message', function(data){
-				$chat.append('<li class="list-group-item" id="affichage"><img src="' + data.avatar + '" id="avatar"/><strong>' + escapeHtml(data.user) + '</strong><br />' + escapeHtml(data.msg) +'</li>')
+				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong>' + escapeHtml(data.user) + '</strong><br />' + escapeHtml(data.msg) +'</li>')
 				var x = document.getElementById('chat'); 
 				x.scrollTop = x.scrollHeight;
 			});
 
 			$("#login").click(function(e){
 				e.preventDefault();
-				socket.emit('new user', $username.val(), $avatarLink.val(), true, function(data){
+				socket.emit('new user', escapeHtml($username.val()), escapeHtml($avatarLink.val()), true, function(data){
 					if(data)
 					{
 						$userFormArea.hide();
-						$messageArea.show();
+						$messageArea.fadeIn();
+						$('#cinemaOn').fadeIn();
 					}
+
 				});
-				$pseudo = $username.val();
-				$image = $avatarLink.val();
+				$pseudo = escapeHtml($username.val());
+				$image = escapeHtml($avatarLink.val());
 				createCookie("username", $pseudo);
 				createCookie("avatar", $image);
 				document.getElementById('pseudo').value = $username.val();
@@ -357,8 +439,9 @@
 				var html = '';
 				for(i = 0; i < data.length; i++)
 				{
-					html += '<li class="list-group-item">' + data[i] + '</li>';
+					html += '<li class="list-group-item">' + escapeHtml(data[i]) + '</li>';
 				}
+				//$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey;"><strong>User ' + escapeHtml(data[i]) + 'test' + ' is connected.</strong></li>');
 				$users.html(html);
 			});
 		});
@@ -382,6 +465,7 @@
         		return false;
    			}
 		});
+
 	</script>
 </body>
 </html>
