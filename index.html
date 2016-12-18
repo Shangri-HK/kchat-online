@@ -207,7 +207,7 @@
 						<br />
 						<label style="color: white">Avatar Link</label>
 						<input class="form-control" id="avatarLink" /><br />
-						<input type="button" id="login" class="btn btn-primary" value="Login" onclick="login()" /><br />
+						<input type="submit" id="login" class="btn btn-primary" value="Login" /><br />
 					</div>
 				</form>
 			</div>
@@ -325,11 +325,14 @@
 				x.scrollTop = x.scrollHeight;
 			});
 
-			function login()
-			{
+			$userForm.submit(function(e){
+				e.preventDefault();
 				socket.emit('new user', $username.val(), $avatarLink.val(), true, function(data){
-				$userFormArea.hide();
-				$messageArea.show();
+					if(data)
+					{
+						$userFormArea.hide();
+						$messageArea.show();
+					}
 				});
 				$pseudo = $username.val();
 				$image = $avatarLink.val();
@@ -337,7 +340,7 @@
 				createCookie("avatar", $image);
 				document.getElementById('pseudo').value = $username.val();
 				$username.val('');
-			}
+			});
 
 			socket.on('get users', function(data){
 				var html = '';
