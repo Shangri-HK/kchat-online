@@ -310,6 +310,17 @@
 			}
 			return null;
 		}
+		function escapeHtml(text) {
+		  var map = {
+		    '&': '&amp;',
+		    '<': '&lt;',
+		    '>': '&gt;',
+		    '"': '&quot;',
+		    "'": '&#039;'
+		  };
+		  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+		}
+
 		$(function(){
 
 
@@ -320,7 +331,7 @@
 			});
 
 			socket.on('new message', function(data){
-				$chat.append('<li class="list-group-item" id="affichage"><img src="' + data.avatar + '" id="avatar"/><strong>' + data.user + '</strong><br />' + data.msg +'</li>')
+				$chat.append('<li class="list-group-item" id="affichage"><img src="' + data.avatar + '" id="avatar"/><strong>' + escapeHtml(data.user) + '</strong><br />' + escapeHtml(data.msg) +'</li>')
 				var x = document.getElementById('chat'); 
 				x.scrollTop = x.scrollHeight;
 			});
