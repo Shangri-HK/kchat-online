@@ -400,6 +400,23 @@
 		  };
 		  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
 		}
+		function linkify(inputText) {
+		    var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+		    //URLs starting with http://, https://, or ftp://
+		    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+		    replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+		    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+		    replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+		    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+		    //Change email addresses to mailto:: links.
+		    replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+		    replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+		    return replacedText;
+		}
 
 		$(function(){
 
@@ -411,14 +428,14 @@
 			});
 
 			socket.on('new message', function(data){
-				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong>' + escapeHtml(data.user) + '</strong><br />' + escapeHtml(data.msg) +'</li>')
+				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong>' + escapeHtml(data.user) + '</strong><br />' + linkify(escapeHtml(data.msg)) +'</li>')
 				var x = document.getElementById('chat'); 
 				x.scrollTop = x.scrollHeight;
 			});
 
 			$("#login").click(function(e){
 				e.preventDefault();
-				socket.emit('new user', escapeHtml($username.val()), escapeHtml($avatarLink.val()), true, function(data){
+				socket.emit('new user', $username.val(), $avatarLink.val(), true, function(data){
 					if(data)
 					{
 						$userFormArea.hide();
