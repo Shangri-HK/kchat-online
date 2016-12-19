@@ -12,7 +12,8 @@
 			margin-left: auto;
     		margin-right: auto;
 			font-family: Arial, Helvetica, sans-serif;
-			background: url("http://i.imgur.com/Dg1KtDt.jpg");
+			background-color: white;
+
 		}
 		#messageArea
 		{
@@ -118,7 +119,7 @@
 		{
 			width : 50px; 
 			height: 50px;
-			box-shadow: 0px 0px 10px rgba(0,0,0,0.70);
+			-webkit-filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.7));
 			margin-right: 10px;
 			float: left;
 		}
@@ -164,15 +165,14 @@
 			margin-top: 5px;
 			margin-left: 10px;
 		}
-		#pseudo
+		#image,
+		#pseudo,
+		#usernameColor,
+		#usernameGlow,
+		#background,
+		#colorTheme
 		{
-			width:130px;
-			height: 42px;
-			overflow: hidden;
-		}
-		#image
-		{
-			width:130px;
+			width:140px;
 			height: 42px;
 			overflow: hidden;
 		}
@@ -224,6 +224,19 @@
 			margin-top: 40px;
 			border: none;
 		}
+		#defaultColor,
+		#blue,
+		#black,
+		#grey,
+		#green,
+		#orange
+		{
+			width: 10px;
+			height: 15px;
+			margin: 5px;
+			border: 1px solid white;
+			border-radius: 2px 2px 2px 2px;
+		}
 		h1
 		{
 			margin-left: auto;
@@ -268,10 +281,26 @@
 		<div id="messageArea" class="row">
 			<div class="col-md-4" id="userList">
 				<form class="col-md-2" id="config" style="display: none;">
-					<label style="color: white">Username</label>
+					<label style="color: white; margin-top: 20px;">Username</label>
 					<textarea class="form-control" id="pseudo"></textarea>
 					<label style="color: white">Avatar</label>
 					<textarea class="form-control" id="image"></textarea>
+					<label style="color: white">Username color</label>
+					<textarea class="form-control" id="usernameColor" placeholder="ex: #FA4D4D"></textarea>
+					<label style="color: white">Username Glow</label>
+					<textarea class="form-control" id="usernameGlow" placeholder="ex: #FA4D4D"></textarea>
+					<label style="color: white">Background</label>
+					<textarea class="form-control" id="background"></textarea>
+					<label style="color: white">Color Theme</label>
+					<textarea class="form-control" id="colorTheme" placeholder="ex: #FA4D4D"></textarea>
+					<div style="display: flex; flex-wrap: nowrap;">
+						<input type="button" id="defaultColor" style="background-color: #FA4D4D" onclick="changeColor('#FA4D4D')"/>
+						<input type="button" id="blue" style="background-color: #4F94FA" onclick="changeColor('#4F94FA')"/>
+						<input type="button" id="black" style="background-color: #191919" onclick="changeColor('#191919')"/>
+						<input type="button" id="grey" style="background-color: #9F9F9F" onclick="changeColor('#9F9F9F')"/>
+						<input type="button" id="green" style="background-color: #94FA50" onclick="changeColor('#94FA50')"/>
+						<input type="button" id="orange" style="background-color: #FAB04E" onclick="changeColor('#FAB04E')"/>
+					</div>
 				</form>
 				<input type="button" id="ok" class="btn btn-primary" value="OK" style="display: none;" onclick="changeInfo()" />
 				<div class="well" id="usersCol">
@@ -312,14 +341,30 @@
 		var $prevPseudo = '';
 		var $cinema = $('#cinema');
 		var $youtubeLink = $('#youtubeLink');
+		var $background = $('#background');
+		var $colorTheme = $('#colorTheme');
+		var $usernameColor = $('#usernameColor');
+		var $usernameGlow = $('#usernameGlow');
 
 		$username.val(readCookie("username"));
 		$avatarLink.val(readCookie("avatar"));
 
+		function changeColor(data)
+		{
+			document.getElementById('header').style.backgroundColor = data;
+			document.getElementById('settings').style.backgroundColor = data;
+			document.getElementById('ok').style.backgroundColor = data;
+			document.getElementById('ok').style.border = "1px solid " + data;
+			document.getElementById('settings').style.border = "1px solid " + data;
+			document.getElementById('cinemaOn').style.border = "1px solid " + data;
+			document.getElementById('cinemaOn').style.backgroundColor = data;
+			createCookie("colorTheme", data);
+		}
+
 		function cinemaOn()
 		{
 			$('#cinema').fadeIn();
-			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(http://i.imgur.com/Dg1KtDt.jpg)'});
+			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(' + escapeHtml($background.val()) + ')'});
 			$('#cinemaOn').fadeOut();
 		}
 
@@ -327,20 +372,22 @@
 		{
 			$('#cinema').fadeOut();
 			$('#cinemaOn').fadeIn();
-			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(http://i.imgur.com/Dg1KtDt.jpg)'});
+			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(' + escapeHtml($background.val()) + ')'});
 		}
-		function showConfig()
-		 {
 
+		function showConfig()
+		{
    			document.getElementById('config').style.display = "block";
    			document.getElementById('ok').style.display = "block";
    			document.getElementById('usersCol').style.display = "none";
    			document.getElementById('settings').style.display = "none";
    			document.getElementById('image').value = escapeHtml($image);
    			document.getElementById('pseudo').value = escapeHtml($pseudo);
-   			$prevImage = $image;
-   			$prevPseudo = $pseudo;
+   			$usernameColor.val(readCookie("usernameColor"));
+   			$usernameGlow.val(readCookie("usernameGlow"));
+   			$background.val(readCookie("background"));
 		}
+
 		function launchVideo()
 		{
 			var link = $youtubeLink.val();
@@ -351,23 +398,44 @@
 					document.getElementById('youtubeWindow').src = "https://www.youtube.com/embed/" + embed[i+1].split('=')[1].split('&')[0];
 			}
 		}
+
+		function returnGlow(data)
+		{
+			if (data != "")
+				return "text-shadow: 0px 0px 5px" +  data + ";"
+			else
+				return "";
+		}
+
 		function changeInfo()
 		{
 			$image = escapeHtml(document.getElementById('image').value);
 			$pseudo = escapeHtml(document.getElementById('pseudo').value);
-			/*socket.on('get users', function(data){
-				var html = '';
-				for(i = 0; i < data.length; i++)
+			if ($colorTheme.val() != "")
 				{
-						html += '<li class="list-group-item">ntm</li>';
+					document.getElementById('header').style.backgroundColor = escapeHtml($colorTheme.val()).toString();
+					document.getElementById('settings').style.backgroundColor = escapeHtml($colorTheme.val()).toString();
+					document.getElementById('ok').style.backgroundColor = escapeHtml($colorTheme.val()).toString();
+					document.getElementById('ok').style.border = "1px solid " + escapeHtml($colorTheme.val()).toString();
+					document.getElementById('settings').style.border = "1px solid " + escapeHtml($colorTheme.val()).toString();
+					document.getElementById('cinemaOn').style.border = "1px solid " + escapeHtml($colorTheme.val()).toString();
+					document.getElementById('cinemaOn').style.backgroundColor = escapeHtml($colorTheme.val()).toString();
+					createCookie("colorTheme", $colorTheme.val());
 				}
-				$users.html(html);
-			});*/
-			/*socket.emit('new user', $pseudo.val(), $image.val(), true, function(data){
-					if(data)
-					{
-					}
-				});*/
+			if ($usernameColor.val() != "")
+				{
+					createCookie("usernameColor", escapeHtml($usernameColor.val()));
+				}
+			else
+				createCookie("usernameColor", "");
+			if ($usernameGlow.val() != "")
+				{
+					createCookie("usernameGlow", escapeHtml($usernameGlow.val()));
+				}
+			else
+				createCookie("usernameGlow", "");
+			document.getElementById('body').style.backgroundImage = "url(" + escapeHtml($background.val()) + ")";
+			createCookie("background", escapeHtml($background.val()));
 			socket.emit('send message', $pseudo.toString(), $image.toString(), false);
 			createCookie("username", $pseudo);
 			createCookie("avatar", $image);
@@ -377,9 +445,11 @@
    			document.getElementById('settings').style.display = "block";
    			document.getElementById('settings').style.marginTop = "182px";
 		}
+
 		function createCookie(name,value) {
 			document.cookie = name+"="+escapeHtml(value);
 		}
+
 		function readCookie(name) {
 			var nameEQ = name + "=";
 			var ca = document.cookie.split(';');
@@ -390,6 +460,7 @@
 			}
 			return null;
 		}
+
 		function escapeHtml(text) {
 		  var map = {
 		    '&': '&amp;',
@@ -400,6 +471,7 @@
 		  };
 		  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
 		}
+
 		function linkify(inputText) {
 		    var replacedText, replacePattern1, replacePattern2, replacePattern3;
 
@@ -428,7 +500,7 @@
 			});
 
 			socket.on('new message', function(data){
-				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong>' + escapeHtml(data.user) + '</strong><br />' + linkify(escapeHtml(data.msg)) +'</li>')
+				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + readCookie("usernameColor") + ';' + returnGlow(readCookie("usernameGlow")) + '">' + escapeHtml(data.user) + '</strong><br />' + linkify(escapeHtml(data.msg)) +'</li>')
 				var x = document.getElementById('chat'); 
 				x.scrollTop = x.scrollHeight;
 			});
@@ -441,6 +513,8 @@
 						$userFormArea.hide();
 						$messageArea.fadeIn();
 						$('#cinemaOn').fadeIn();
+						changeColor(readCookie("colorTheme"));
+						document.getElementById('body').style.backgroundImage = "url(" + readCookie("background") + ")";
 					}
 
 				});
