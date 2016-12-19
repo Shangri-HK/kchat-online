@@ -412,6 +412,33 @@
    			$background.val(readCookie("background"));
 		}
 
+		function autoLaunch(data)
+		{
+			alert(data);
+		}
+
+		function isYoutube(data)
+		{
+			
+			var href = data.split('"')[1];
+			var embed = href.split('/');
+			if (embed != null)
+			{
+				for (var i = 0; i < embed.length; i++)
+				{
+					if (embed[i] == "www.youtube.com" || embed[i] == "www.youtube.com&quot")
+					{
+						return '<a id="myLink" href="#" onclick="autoLaunch(' + 'www.youtube.com' + '/' + embed[i + 1] + ');">' + 'www.youtube.com' + '/' + embed[i + 1] + '</a>';
+						//alert("its youtube");
+						cinemaOn();
+					}
+						//document.getElementById('youtubeWindow').src = "https://www.youtube.com/embed/" + embed[i+1].split('=')[1].split('&')[0];
+				}
+			}
+			return data;
+			//<a href="http://www.youtube.com" target="_blank">www.youtube.com</a>
+		}
+
 		function launchVideo()
 		{
 			var link = $youtubeLink.val();
@@ -527,7 +554,7 @@
 
 			socket.on('new message', function(data){
 				if (data.alert == 0){
-				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + readCookie("usernameColor") + ';' + returnGlow(readCookie("usernameGlow")) + '">' + escapeHtml(data.user) + '</strong><br />' + linkify(escapeHtml(data.msg)) +'</li>')}
+				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + readCookie("usernameColor") + ';' + returnGlow(readCookie("usernameGlow")) + '">' + escapeHtml(data.user) + '</strong><br />' + isYoutube(linkify(escapeHtml(data.msg))) +'</li>')}
 				else if (data.alert == 1)
 					$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
 				else
