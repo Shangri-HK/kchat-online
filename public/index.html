@@ -35,7 +35,7 @@
     		margin-right: auto;
 			font-family: Arial, Helvetica, sans-serif;
 			background-color: white;
-
+			background-repeat: no-repeat;
 		}
 		#messageArea
 		{
@@ -371,6 +371,7 @@
 		$username.val(readCookie("username"));
 		$avatarLink.val(readCookie("avatar"));
 
+		document.getElementById('body').style.backgroundImage = "url(background.png)";
 		function changeColor(data)
 		{
 			document.getElementById('header').style.backgroundColor = data;
@@ -386,15 +387,16 @@
 		function cinemaOn()
 		{
 			$('#cinema').fadeIn();
-			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(' + escapeHtml($background.val()) + ')'});
+			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(' + readCookie("background") + ')'});
 			$('#cinemaOn').fadeOut();
+			//$('html, body').css({'height': '100%'};
 		}
 
 		function cinemaOut()
 		{
 			$('#cinema').fadeOut();
 			$('#cinemaOn').fadeIn();
-			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(' + escapeHtml($background.val()) + ')'});
+			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(' + readCookie("background") + ')'});
 		}
 
 		function showConfig()
@@ -456,7 +458,10 @@
 				}
 			else
 				createCookie("usernameGlow", "");
-			document.getElementById('body').style.backgroundImage = "url(" + escapeHtml($background.val()) + ")";
+			if (escapeHtml($background.val()) == "")
+				document.getElementById('body').style.backgroundImage = "url(background.png)";
+			else
+				document.getElementById('body').style.backgroundImage = "url(" + escapeHtml($background.val()) + ")";
 			createCookie("background", escapeHtml($background.val()));
 			socket.emit('send message', $pseudo.toString(), $image.toString(), false);
 			createCookie("username", $pseudo);
@@ -542,7 +547,10 @@
 						$messageArea.fadeIn();
 						$('#cinemaOn').fadeIn();
 						changeColor(readCookie("colorTheme"));
-						document.getElementById('body').style.backgroundImage = "url(" + readCookie("background") + ")";
+						if (readCookie("background") == "")
+							document.getElementById('body').style.backgroundImage = "url(background.png)";
+						else
+							document.getElementById('body').style.backgroundImage = "url(" + readCookie("background") + ")";
 					}
 				});
 				$pseudo = escapeHtml($username.val());
