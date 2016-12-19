@@ -499,7 +499,12 @@
 			});
 
 			socket.on('new message', function(data){
-				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + readCookie("usernameColor") + ';' + returnGlow(readCookie("usernameGlow")) + '">' + escapeHtml(data.user) + '</strong><br />' + linkify(escapeHtml(data.msg)) +'</li>')
+				if (data.alert == 0){
+				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + readCookie("usernameColor") + ';' + returnGlow(readCookie("usernameGlow")) + '">' + escapeHtml(data.user) + '</strong><br />' + linkify(escapeHtml(data.msg)) +'</li>')}
+				else if (data.alert == 1)
+					$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
+				else
+					$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' has disconnected.<strong/>')
 				var x = document.getElementById('chat'); 
 				x.scrollTop = x.scrollHeight;
 				audio.volume = 0.01;
@@ -517,7 +522,6 @@
 						changeColor(readCookie("colorTheme"));
 						document.getElementById('body').style.backgroundImage = "url(" + readCookie("background") + ")";
 					}
-
 				});
 				$pseudo = escapeHtml($username.val());
 				$image = escapeHtml($avatarLink.val());
@@ -533,7 +537,6 @@
 				{
 					html += '<li class="list-group-item">' + escapeHtml(data[i]) + '</li>';
 				}
-				//$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey;"><strong>User ' + escapeHtml(data[i]) + 'test' + ' is connected.</strong></li>');
 				$users.html(html);
 			});
 		});

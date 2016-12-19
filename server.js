@@ -19,6 +19,7 @@ io.sockets.on('connection', function(socket){
 	//Disconnect
 	socket.on('disconnect', function(data){
 		users.splice(users.indexOf(socket.username), 1);
+		io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, alert: 2});
 		updateUsernames();
 		connections.splice(connections.indexOf(socket), 1);
 		console.log('Disconnected: %s sockets connected', connections.length);
@@ -28,7 +29,7 @@ io.sockets.on('connection', function(socket){
 	socket.on('send message', function(data, avatar, add){
 		console.log(typeof data);
 		if (add)
-			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar});
+			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, alert: 0});
 		else
 		{
 			socket.username = data;
@@ -43,6 +44,7 @@ io.sockets.on('connection', function(socket){
 		socket.username = data;
 		socket.avatar = avatar;
 		if(add){
+			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, alert: 1});
 		users.push(socket.username);
 		}
 		updateUsernames();
