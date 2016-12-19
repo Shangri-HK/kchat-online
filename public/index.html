@@ -412,7 +412,7 @@
    			$background.val(readCookie("background"));
 		}
 
-		function autoLaunch(data)
+		/*function autoLaunch(data)
 		{
 			alert(data);
 		}
@@ -437,7 +437,7 @@
 			}
 			return data;
 			//<a href="http://www.youtube.com" target="_blank">www.youtube.com</a>
-		}
+		}*/
 
 		function launchVideo()
 		{
@@ -554,7 +554,7 @@
 
 			socket.on('new message', function(data){
 				if (data.alert == 0){
-				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + readCookie("usernameColor") + ';' + returnGlow(readCookie("usernameGlow")) + '">' + escapeHtml(data.user) + '</strong><br />' + isYoutube(linkify(escapeHtml(data.msg))) +'</li>')}
+				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + readCookie("usernameColor") + ';' + returnGlow(readCookie("usernameGlow")) + '">' + escapeHtml(data.user) + '</strong><br />' + /*isYoutube(*/linkify(escapeHtml(data.msg))/*)*/ +'</li>')}
 				else if (data.alert == 1)
 					$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
 				else
