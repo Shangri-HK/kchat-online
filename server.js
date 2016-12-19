@@ -4,7 +4,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 users = [];
 connections = [];
-
+app.use(express.static(__dirname + '/public'));
 server.listen(process.env.PORT ||3000);
 console.log('Server running...');
 
