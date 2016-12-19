@@ -323,6 +323,7 @@
 
 	<script>
 		var socket = io.connect();
+		var audio = new Audio('notif.mp3');
 		var $messageForm = $('#messageForm');
 		var $message = $('#message');
 		var $chat = $('#chat');
@@ -502,6 +503,8 @@
 				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + readCookie("usernameColor") + ';' + returnGlow(readCookie("usernameGlow")) + '">' + escapeHtml(data.user) + '</strong><br />' + linkify(escapeHtml(data.msg)) +'</li>')
 				var x = document.getElementById('chat'); 
 				x.scrollTop = x.scrollHeight;
+				audio.volume = 0.005;
+				audio.play();
 			});
 
 			$("#login").click(function(e){
