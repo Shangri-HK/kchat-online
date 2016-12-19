@@ -27,7 +27,6 @@ io.sockets.on('connection', function(socket){
 
 	//Send Message
 	socket.on('send message', function(data, avatar, add){
-		console.log(typeof data);
 		if (add)
 			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, alert: 0});
 		else
