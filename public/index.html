@@ -271,10 +271,17 @@
 	</style>
 </head>
 <body id="body">
+
+
+	<!-- LOGO HEADER -->
 	<div id="header">
 		<a href="kchat-online.herokuapp.com"><img src="logo.png" id="logo"/></a>
 	</div>
 	<div class="container" id="container">
+
+
+
+		<!-- MODE CINEMA -->
 		<input type="submit" id="cinemaOn" class="btn btn-primary" value="Show cinema mode"  style="display: none;" onclick="cinemaOn()" /><br />
 		<div id="cinema" style="display:none;"/>
 			<iframe  id="youtubeWindow" width="1000" height="500" src="https://www.youtube.com/embed/" style="margin-top: 20px; margin-left: 102px;"></iframe><br />
@@ -285,6 +292,9 @@
 			<input type="submit" id="cinemaOut" class="btn btn-primary" value="Hide cinema mode"  onclick="cinemaOut()" />
 		</div>
 
+
+
+		<!-- LOGIN -->
 		<div id="userFormArea" class="row">
 			<div class="col-md-12">
 				<form id="userForm">
@@ -300,8 +310,17 @@
 			</div>
 		</div>
 
+		<!-- MAIN WINDOW -->
 		<div id="messageArea" class="row">
+
+
+
+			<!-- LEFT COLUMN -->
 			<div class="col-md-4" id="userList">
+
+
+
+				<!-- SETTINGS -->
 				<form class="col-md-2" id="config" style="display: none;">
 					<label style="color: white; margin-top: 20px;">Username</label>
 					<textarea class="form-control" id="pseudo"></textarea>
@@ -325,12 +344,20 @@
 					</div>
 				</form>
 				<input type="button" id="ok" class="btn btn-primary" value="OK" style="display: none;" onclick="changeInfo()" />
+
+
+
+				<!-- ONLINE USERS -->
 				<div class="well" id="usersCol">
 					<h4>Online Users</h4>
 					<ul class="list-group" id="users"></ul>
 				</div>
 				<input type="button" id="settings" class="btn btn-primary" value="Settings"  onclick="showConfig()" />
 			</div>
+
+
+
+			<!-- CHAT -->
 			<div class="col-md-8" id="chatWindow">
 				<ul class="list-group" id="chat"></ul>
 				<form id="messageForm">
@@ -368,6 +395,7 @@
 		var $usernameColor = $('#usernameColor');
 		var $usernameGlow = $('#usernameGlow');
 
+		//Setting inputs from cookies
 		$username.val(readCookie("username"));
 		$avatarLink.val(readCookie("avatar"));
 		$pseudo.val(readCookie("username"));
@@ -375,8 +403,10 @@
 		$usernameColor.val(readCookie("usernameColor"));
    		$usernameGlow.val(readCookie("usernameGlow"));
    		$background.val(readCookie("background"));
-
 		document.getElementById('body').style.backgroundImage = "url(background.png)";
+
+
+		//Change the theme
 		function changeColor(data)
 		{
 			document.getElementById('header').style.backgroundColor = data;
@@ -389,6 +419,8 @@
 			createCookie("colorTheme", data);
 		}
 
+
+		//Enable the cinema mode
 		function cinemaOn()
 		{
 			$('#cinema').fadeIn();
@@ -400,6 +432,8 @@
 			//$('html, body').css({'height': '100%'};
 		}
 
+
+		//Disable cinema mode
 		function cinemaOut()
 		{
 			$('#cinema').fadeOut();
@@ -410,6 +444,8 @@
 				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(background.png)'});
 		}
 
+
+		//Enable the settings window
 		function showConfig()
 		{
    			document.getElementById('config').style.display = "block";
@@ -426,7 +462,7 @@
 
 		}
 
-		/*function autoLaunch(data)
+		function autoLaunch(data)
 		{
 			alert(data);
 		}
@@ -435,6 +471,7 @@
 		{
 			
 			var href = data.split('"')[1];
+			alert(href);
 			var embed = href.split('/');
 			if (embed != null)
 			{
@@ -442,7 +479,8 @@
 				{
 					if (embed[i] == "www.youtube.com" || embed[i] == "www.youtube.com&quot")
 					{
-						return '<a id="myLink" href="#" onclick="autoLaunch(' + 'www.youtube.com' + '/' + embed[i + 1] + ');">' + 'www.youtube.com' + '/' + embed[i + 1] + '</a>';
+
+						return data + '  ' + '<a id="myLink" href="#" onclick="autoLaunch(' +  embed[++i] + ');">' + ' <strong style="color:red;">► play on cinema mode.</strong></a>';
 						//alert("its youtube");
 						cinemaOn();
 					}
@@ -451,8 +489,10 @@
 			}
 			return data;
 			//<a href="http://www.youtube.com" target="_blank">www.youtube.com</a>
-		}*/
+		}
 
+
+		//Initialize the youtube video link
 		function launchVideo()
 		{
 			var link = $youtubeLink.val();
@@ -464,6 +504,8 @@
 			}
 		}
 
+
+		//Return the text-shadow CSS correctly
 		function returnGlow(data)
 		{
 			if (data != "")
@@ -472,19 +514,12 @@
 				return "";
 		}
 
+
+		//Set the options selected
 		function changeInfo()
 		{
 			if ($colorTheme.val() != "")
-				{
-					document.getElementById('header').style.backgroundColor = escapeHtml($colorTheme.val()).toString();
-					document.getElementById('settings').style.backgroundColor = escapeHtml($colorTheme.val()).toString();
-					document.getElementById('ok').style.backgroundColor = escapeHtml($colorTheme.val()).toString();
-					document.getElementById('ok').style.border = "1px solid " + escapeHtml($colorTheme.val()).toString();
-					document.getElementById('settings').style.border = "1px solid " + escapeHtml($colorTheme.val()).toString();
-					document.getElementById('cinemaOn').style.border = "1px solid " + escapeHtml($colorTheme.val()).toString();
-					document.getElementById('cinemaOn').style.backgroundColor = escapeHtml($colorTheme.val()).toString();
-					createCookie("colorTheme", $colorTheme.val());
-				}
+				changeColor(escapeHtml($colorTheme.val()).toString());
 			if ($usernameColor.val() != "")
 				{
 					createCookie("usernameColor", escapeHtml(document.getElementById('usernameColor').value));
@@ -505,6 +540,13 @@
 			socket.emit('send message', document.getElementById('pseudo').value, document.getElementById('image').value, escapeHtml(document.getElementById('usernameColor').value), escapeHtml(document.getElementById('usernameGlow').value), false);
 			createCookie("username", document.getElementById('pseudo').value);
 			createCookie("avatar", document.getElementById('image').value);
+			showOffSettings();
+		}
+
+
+		//Disable the settings sidebar
+		function showOffSettings()
+		{
 			document.getElementById('config').style.display = "none";
    			document.getElementById('ok').style.display = "none";
    			document.getElementById('usersCol').style.display = "block";
@@ -512,10 +554,14 @@
    			document.getElementById('settings').style.marginTop = "182px";
 		}
 
+
+		//Create the cookie
 		function createCookie(name,value) {
 			document.cookie = name+"="+escapeHtml(value);
 		}
 
+
+		//Read the cookie
 		function readCookie(name) {
 			var nameEQ = name + "=";
 			var ca = document.cookie.split(';');
@@ -527,6 +573,8 @@
 			return null;
 		}
 
+
+		//Protect from html injection
 		function escapeHtml(text) {
 		  var map = {
 		    '&': '&amp;',
@@ -538,6 +586,8 @@
 		  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
 		}
 
+
+		//Make a html link
 		function linkify(inputText) {
 		    var replacedText, replacePattern1, replacePattern2, replacePattern3;
 
@@ -556,6 +606,8 @@
 		    return replacedText;
 		}
 
+
+		//Client
 		$(function(){
 
 			$messageForm.submit(function(e){
@@ -564,19 +616,23 @@
 				$message.val('');
 			});
 
+
+			//Message emit on chat or on user's connection/deconnection
 			socket.on('new message', function(data){
 				if (data.alert == 0){
-				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + /*isYoutube(*/linkify(escapeHtml(data.msg))/*)*/ +'</li>')}
+				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + isYoutube(linkify(escapeHtml(data.msg))) +'</li>')}
 				else if (data.alert == 1)
 					$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
 				else
 					$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' has disconnected.<strong/>')
 				var x = document.getElementById('chat'); 
 				x.scrollTop = x.scrollHeight;
-				audio.volume = 0.01;
+				audio.volume = 0.2;
 				audio.play();
 			});
 
+
+			//Add the user's informations at login 
 			$("#login").click(function(e){
 				e.preventDefault();
 				socket.emit('new user', $username.val(), $avatarLink.val(), readCookie("usernameColor"), readCookie("usernameGlow"), true, function(data){
@@ -592,14 +648,14 @@
 							document.getElementById('body').style.backgroundImage = "url(" + readCookie("background") + ")";
 					}
 				});
-				//$pseudo = escapeHtml($username.val());
-				//$image = escapeHtml($avatarLink.val());
 				createCookie("username", $pseudo);
 				createCookie("avatar", $image);
 				document.getElementById('pseudo').value = $username.val();
 				$username.val('');
 			});
 
+
+			//Show the users online on the sidebar
 			socket.on('get users', function(data){
 				var html = '';
 				for(i = 0; i < data.length; i++)
@@ -609,6 +665,9 @@
 				$users.html(html);
 			});
 		});
+
+
+		//Make the enter button send message
 		$("#message").keypress(function (e) {
     		if(e.which == 13 && !e.shiftKey) 
     		{        
@@ -617,12 +676,17 @@
         		return false;
    			}
 		});
+
+		//Enable the line break
 		$("#image").keypress(function (e) {
     		if(e.which == 13 && !e.shiftKey) 
     		{        
         		return false;
    			}
 		});
+
+
+		//Enable the line break
 		$("#pseudo").keypress(function (e) {
     		if(e.which == 13 && !e.shiftKey) 
     		{        
@@ -630,6 +694,32 @@
    			}
 		});
 
+
+		//Enable the line break
+		$("#colorTheme").keypress(function (e) {
+    		if(e.which == 13 && !e.shiftKey) 
+    		{        
+        		return false;
+   			}
+		});
+
+
+		//Enable the line break
+		$("#usernameColor").keypress(function (e) {
+    		if(e.which == 13 && !e.shiftKey) 
+    		{        
+        		return false;
+   			}
+		});
+
+
+		//Enable the line break
+		$("#usernameGlow").keypress(function (e) {
+    		if(e.which == 13 && !e.shiftKey) 
+    		{        
+        		return false;
+   			}
+		});
 	</script>
 </body>
 </html>
