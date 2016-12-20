@@ -6,269 +6,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-latest.min.js"> </script>
 	<script src="/socket.io/socket.io.js"></script>
-	<style>
-		/* Let's get this party started */
-		::-webkit-scrollbar 
-		{
-	    	width: 12px;
-		}
-		::-webkit-scrollbar-track 
-		{
-		    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-		    -webkit-border-radius: 10px;
-		    border-radius: 10px;
-		}
-		::-webkit-scrollbar-thumb 
-		{
-		    -webkit-border-radius: 10px;
-		    border-radius: 10px;
-		    background: rgba(255,0,0,0.8); 
-		    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
-		}
-		::-webkit-scrollbar-thumb:window-inactive 
-		{
-			background: rgba(255,0,0,0.4); 
-		}
-		body
-		{
-			margin-left: auto;
-    		margin-right: auto;
-			font-family: Arial, Helvetica, sans-serif;
-			background-color: white;
-			background-repeat: no-repeat;
-		}
-		#messageArea
-		{
-			display: none;
-		}
-		#userFormArea
-		{
-			background: rgba(204,204,204,0.7);
-			border: 1px solid white;
-			border-radius: 0px 10px 0 20px;
-			box-shadow: 0px 0px 40px rgba(250,250,250,0.50);
-			width: 600px;
-			margin: 0 auto;
-			margin-top: 130px;
-			
-		}
-		#userList
-		{
-
-			background-repeat: no-repeat;
-			background-position: center;
-			background: rgba(204,204,204,0.9);
-			background-size: 360px 600px;
-			border: 1px solid white;
-			border-radius: 0px 10px 0 20px;
-			box-shadow: 0px 0px 40px rgba(250,250,250,0.50);
-			width: 200px;
-			height: 600px;
-			margin: 0 auto;
-
-		}
-		#users
-		{
-			height: 350px;
-			overflow: auto;
-			margin-bottom: 10px;
-		}
-		#usersCol
-		{
-			background: rgba(204,204,204,0);
-			border: none;
-		}
-		#settings
-		{
-			margin-top: 162px;
-			border-radius: 0px 10px 0 20px;
-			border: 1px solid #FA7F7F;
-			background-color: #FA4D4D;
-			width: 165px;
-		}
-		#settings:hover
-		{
-			background-color: #8E2E2E;
-		}
-		#ok
-		{
-			margin-top: 619px;
-			border-radius: 0px 10px 0 20px;
-			border: 1px solid #FA7F7F;
-			background-color: #FA4D4D;
-			width: 165px;
-		}
-		#ok:hover
-		{
-			background-color: #8E2E2E;
-		}
-		#login
-		{
-			background-color: #FA4D4D;
-		}
-		#chat
-		{
-			box-shadow: 0px 0px 40px rgb(250, 77, 77, 0.5);
-			background: rgba(204,204,204,0.9);
-			border-radius: 0px 10px 0 20px;
-			border: 1px solid white;
-			height: 600px;
-			width: 1000px;
-			overflow:auto;
-		}
-		#chatWindow
-		{
-			margin-bottom: 10px;
-		}
-		#message
-		{
-			width: 1000px;
-			margin-top: 10px;
-			height: 100px;
-			border-radius: 0px 10px 0 20px;
-		}
-		#affichage
-		{
-			background: rgba(204,204,204,0);
-    		overflow: auto;
-    		word-wrap: break-word;
-    		text-align: justify;
-   			height : auto;
-     		list-style-type:none;
-   			font-family: Arial, Helvetica, sans-serif;
-		}
-		#avatar
-		{
-			width : 50px; 
-			height: 50px;
-			-webkit-filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.7));
-			margin-right: 10px;
-			float: left;
-		}
-		#avatar:hover
-		{
-			width:100px;
-			height:100px;
-		}
-		#avatarChange
-		{
-			margin-top: 10px;
-			margin-left: 10px;
-		}
-		#youtube:hover
-		{
-			width:700px;
-			height:auto;
-		}
-		#avatarSelect
-		{
-			width: 100px;
-			height: 34px;
-			flex-wrap: wrap;
-			float: left;
-		}
-		#header
-		{
-			position: top;
-			vertical-align: top;
-			margin-top: 0px;
-			height: 50px;
-			width: auto;
-			background-color: #FA4D4D;
-		}
-		#container
-		{
-			margin-top: 50px;
-		}
-		#logo
-		{
-			vertical-align: top;
-			height: 40px;
-			margin-top: 5px;
-			margin-left: 10px;
-		}
-		#image,
-		#pseudo,
-		#usernameColor,
-		#usernameGlow,
-		#background,
-		#colorTheme
-		{
-			width:140px;
-			height: 42px;
-			overflow: hidden;
-		}
-		#cinema
-		{
-			width: 1215px;
-			height: 600px;
-			box-shadow: 0px 0px 10px rgba(0,0,0,0.70);
-			background: rgba(0, 00, 0, 0.5);
-			border: 1px solid grey;
-			border-radius: 0px 10px 0 20px;
-			margin-bottom: 200px;
-			overflow: visible;
-
-		}
-		#youtubeSubmit
-		{
-			border-radius: 0px 10px 0 20px;
-			border: 1px solid #FA7F7F;
-			background-color: #8E2E2E;
-			width: 175px;
-			margin-left: 20px
-		}
-		#youtubeSubmit:hover
-		{
-			background-color: #8E2E2E;
-		}
-		#cinemaOn
-		{
-			border-radius: 10px 0px 20px 0px;
-			border: 1px solid #FA7F7F;
-			background-color: #FA4D4D;
-			width: 165px;
-			margin-bottom: 20px;			
-		}
-		#cinemaOn:hover
-		{
-			background-color: #8E2E2E;	
-		}
-		#youtubeForm
-		{
-			margin-top: 20px;
-		}
-		#cinemaOut
-		{
-			width: 1215px;
-			border-radius: 0 0 0 0;
-			background-color: #222222;
-			margin-top: 40px;
-			border: none;
-		}
-		#defaultColor,
-		#blue,
-		#black,
-		#grey,
-		#green,
-		#orange
-		{
-			width: 10px;
-			height: 15px;
-			margin: 5px;
-			border: 1px solid white;
-			border-radius: 2px 2px 2px 2px;
-		}
-		h1
-		{
-			margin-left: auto;
-    		margin-right: auto;
-    		text-align: center;
-			font-family: 'Courier New', Courier, monospace;
-			font-size: 13px;
-			color: white;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body id="body">
 
@@ -284,7 +22,7 @@
 		<!-- MODE CINEMA -->
 		<input type="submit" id="cinemaOn" class="btn btn-primary" value="Show cinema mode"  style="display: none;" onclick="cinemaOn()" /><br />
 		<div id="cinema" style="display:none;"/>
-			<iframe  id="youtubeWindow" width="1000" height="500" src="https://www.youtube.com/embed/" style="margin-top: 20px; margin-left: 102px;"></iframe><br />
+			<iframe  id="youtubeWindow" width="1000" height="500" src="https://www.youtube.com/embed/" style="margin-top: 5px; margin-left: 102px;"></iframe><br />
 			<div id="youtubeForm">
 				<input class="form-control" id="youtubeLink" style="width:800px; float:left; margin-left: 102px; background-color: grey;"/>
 				<input type="submit" id="youtubeSubmit" class="btn btn-primary" value="OK"  onclick="launchVideo()" />
@@ -310,18 +48,20 @@
 			</div>
 		</div>
 
+
+
 		<!-- MAIN WINDOW -->
 		<div id="messageArea" class="row">
 
 
 
 			<!-- LEFT COLUMN -->
-			<div class="col-md-4" id="userList">
+			<div class="col-md-4" id="userList" style="overflow: auto;">
 
 
 
 				<!-- SETTINGS -->
-				<form class="col-md-2" id="config" style="display: none;">
+				<form class="col-md-12" id="config" style="display: none;">
 					<label style="color: white; margin-top: 20px;">Username</label>
 					<textarea class="form-control" id="pseudo"></textarea>
 					<label style="color: white">Avatar</label>
@@ -352,14 +92,16 @@
 					<h4>Online Users</h4>
 					<ul class="list-group" id="users"></ul>
 				</div>
-				<input type="button" id="settings" class="btn btn-primary" value="Settings"  onclick="showConfig()" />
+				
 			</div>
 
 
 
 			<!-- CHAT -->
 			<div class="col-md-8" id="chatWindow">
+
 				<ul class="list-group" id="chat"></ul>
+				<input type="button" id="settings" class="btn btn-primary" value="Settings"  onclick="showConfig()" />
 				<form id="messageForm">
 					<div class="form-group">
 						<textarea class="form-control" id="message"></textarea>
@@ -424,6 +166,12 @@
 		function cinemaOn()
 		{
 			$('#cinema').fadeIn();
+			document.getElementById('chat').style.height = "320px";
+			document.getElementById('message').style.height = "30px";
+			document.getElementById('container').style.marginTop = "0px";
+			document.getElementById('chat').style.marginBottom = "0px";
+			document.getElementById('userList').style.height = "320px";
+			document.getElementById('settings').style.height = "20px";
 			if (readCookie("background" != ""))
 				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(' + readCookie("background") + ')'});
 			else
@@ -436,6 +184,7 @@
 		//Disable cinema mode
 		function cinemaOut()
 		{
+			document.getElementById('container').style.marginTop = "20px";
 			$('#cinema').fadeOut();
 			$('#cinemaOn').fadeIn();
 			if (readCookie("background" != ""))
@@ -469,9 +218,8 @@
 
 		function isYoutube(data)
 		{
-			
+			return (data);
 			var href = data.split('"')[1];
-			alert(href);
 			var embed = href.split('/');
 			if (embed != null)
 			{

@@ -1,0 +1,261 @@
+::-webkit-scrollbar 
+		{
+	    	width: 12px;
+		}
+		::-webkit-scrollbar-track 
+		{
+		    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+		    -webkit-border-radius: 10px;
+		    border-radius: 10px;
+		}
+		::-webkit-scrollbar-thumb 
+		{
+		    -webkit-border-radius: 10px;
+		    border-radius: 10px;
+		    background: rgba(255,0,0,0.8); 
+		    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+		}
+		::-webkit-scrollbar-thumb:window-inactive 
+		{
+			background: rgba(255,0,0,0.4); 
+		}
+		body
+		{
+			margin-left: auto;
+    		margin-right: auto;
+			font-family: Arial, Helvetica, sans-serif;
+			background-color: white;
+			background-repeat: no-repeat;
+		}
+		#messageArea
+		{
+			display: none;
+		}
+		#userFormArea
+		{
+			background: rgba(204,204,204,0.7);
+			border: 1px solid white;
+			border-radius: 0px 10px 0 20px;
+			box-shadow: 0px 0px 40px rgba(250,250,250,0.50);
+			width: 600px;
+			margin: 0 auto;
+			margin-top: 130px;
+			
+		}
+		#userList
+		{
+
+			background-repeat: no-repeat;
+			background-position: center;
+			background: rgba(204,204,204,0.9);
+			background-size: 360px 600px;
+			border: 1px solid white;
+			border-radius: 0px 10px 0 20px;
+			box-shadow: 0px 0px 40px rgba(250,250,250,0.50);
+			width: 200px;
+			height: 600px;
+			margin: 0 auto;
+
+		}
+		#users
+		{
+			height: 350px;
+			overflow: auto;
+			margin-bottom: 10px;
+		}
+		#usersCol
+		{
+			background: rgba(204,204,204,0);
+			border: none;
+		}
+		#settings
+		{
+			margin-top: 0px;
+			border-radius: 0px 10px 0 20px;
+			border: 1px solid #FA7F7F;
+			background-color: #FA4D4D;
+			width: 165px;
+		}
+		#settings:hover
+		{
+			background-color: #8E2E2E;
+		}
+		#ok
+		{
+			margin-top: 619px;
+			border-radius: 0px 10px 0 20px;
+			border: 1px solid #FA7F7F;
+			background-color: #FA4D4D;
+			width: 165px;
+		}
+		#ok:hover
+		{
+			background-color: #8E2E2E;
+		}
+		#login
+		{
+			background-color: #FA4D4D;
+		}
+		#chat
+		{
+			box-shadow: 0px 0px 40px rgb(250, 77, 77, 0.5);
+			background: rgba(204,204,204,0.9);
+			border-radius: 0px 10px 0 20px;
+			border: 1px solid white;
+			height: 600px;
+			width: 1000px;
+			overflow:auto;
+		}
+		#chatWindow
+		{
+			margin-bottom: 10px;
+		}
+		#message
+		{
+			width: 1000px;
+			margin-top: 10px;
+			height: 100px;
+			border-radius: 0px 10px 0 20px;
+		}
+		#affichage
+		{
+			background: rgba(204,204,204,0);
+    		overflow: auto;
+    		word-wrap: break-word;
+    		text-align: justify;
+   			height : auto;
+     		list-style-type:none;
+   			font-family: Arial, Helvetica, sans-serif;
+		}
+		#avatar
+		{
+			width : 50px; 
+			height: 50px;
+			-webkit-filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.7));
+			margin-right: 10px;
+			float: left;
+		}
+		#avatar:hover
+		{
+			width:100px;
+			height:100px;
+		}
+		#avatarChange
+		{
+			margin-top: 10px;
+			margin-left: 10px;
+		}
+		#youtube:hover
+		{
+			width:700px;
+			height:auto;
+		}
+		#avatarSelect
+		{
+			width: 100px;
+			height: 34px;
+			flex-wrap: wrap;
+			float: left;
+		}
+		#header
+		{
+			position: top;
+			vertical-align: top;
+			margin-top: 0px;
+			height: 50px;
+			width: auto;
+			background-color: #FA4D4D;
+		}
+		#container
+		{
+			margin-top: 50px;
+		}
+		#logo
+		{
+			vertical-align: top;
+			height: 40px;
+			margin-top: 5px;
+			margin-left: 10px;
+		}
+		#image,
+		#pseudo,
+		#usernameColor,
+		#usernameGlow,
+		#background,
+		#colorTheme
+		{
+			width:140px;
+			height: 42px;
+			overflow: hidden;
+		}
+		#cinema
+		{
+			width: 1215px;
+			height: 553px;
+			box-shadow: 0px 0px 10px rgba(0,0,0,0.70);
+			background: rgba(0, 00, 0, 0.5);
+			border: 1px solid grey;
+			border-radius: 0px 10px 0 20px;
+			margin-bottom: 5px;
+			overflow: visible;
+
+		}		
+		#cinemaOn
+		{
+			border-radius: 10px 0px 20px 0px;
+			border: 1px solid #FA7F7F;
+			background-color: #FA4D4D;
+			width: 165px;
+			margin-bottom: 20px;			
+		}
+		#youtubeSubmit
+		{
+			border-radius: 0px 10px 0 20px;
+			border: 1px solid #FA7F7F;
+			background-color: #8E2E2E;
+			width: 175px;
+			margin-left: 20px
+		}
+		#youtubeSubmit:hover
+		{
+			background-color: #8E2E2E;
+		}
+
+		#cinemaOn:hover
+		{
+			background-color: #8E2E2E;	
+		}
+		#youtubeForm
+		{
+			margin-top: 2px;
+		}
+		#cinemaOut
+		{
+			width: 1215px;
+			border-radius: 0 0 0 0;
+			background-color: #222222;
+			margin-top: 40px;
+			border: none;
+		}
+		#defaultColor,
+		#blue,
+		#black,
+		#grey,
+		#green,
+		#orange
+		{
+			width: 10px;
+			height: 15px;
+			margin: 5px;
+			border: 1px solid white;
+			border-radius: 2px 2px 2px 2px;
+		}
+		h1
+		{
+			margin-left: auto;
+    		margin-right: auto;
+    		text-align: center;
+			font-family: 'Courier New', Courier, monospace;
+			font-size: 13px;
+			color: white;
+		}
