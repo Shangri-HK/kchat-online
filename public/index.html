@@ -392,7 +392,10 @@
 		function cinemaOn()
 		{
 			$('#cinema').fadeIn();
-			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(' + readCookie("background") + ')'});
+			if (readCookie("background" != ""))
+				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(' + readCookie("background") + ')'});
+			else
+				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(background.png)'});
 			$('#cinemaOn').fadeOut();
 			//$('html, body').css({'height': '100%'};
 		}
@@ -401,7 +404,10 @@
 		{
 			$('#cinema').fadeOut();
 			$('#cinemaOn').fadeIn();
-			$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(' + readCookie("background") + ')'});
+			if (readCookie("background" != ""))
+				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(' + readCookie("background") + ')'});
+			else
+				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(background.png)'});
 		}
 
 		function showConfig()
