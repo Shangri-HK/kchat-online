@@ -26,24 +26,28 @@ io.sockets.on('connection', function(socket){
 	});
 
 	//Send Message
-	socket.on('send message', function(data, avatar, add){
+	socket.on('send message', function(data, avatar, color, glow, add){
 		if (add)
-			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, alert: 0});
+			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow, alert: 0});
 		else
 		{
 			socket.username = data;
 			socket.avatar = avatar;
+			socket.color = color;
+			socket.glow = glow;
 			updateUsernames();
 		}
 	});
 
 	//New User
-	socket.on('new user', function(data, avatar, add, callback){
+	socket.on('new user', function(data, avatar, color, glow, add, callback){
 		callback(true);
 		socket.username = data;
 		socket.avatar = avatar;
+		socket.color = color;
+		socket.glow = glow;
 		if(add){
-			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, alert: 1});
+			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow, alert: 1});
 		users.push(socket.username);
 		}
 		updateUsernames();

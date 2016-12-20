@@ -357,8 +357,8 @@
 		var $settings = $('#settings');
 		var $config = $('#config');
 		var $avatarLink = $('#avatarLink');
-		var $image = '';
-		var $pseudo = 'Random';
+		var $image = $('#image');
+		var $pseudo = $('#pseudo');;
 		var $prevImage;
 		var $prevPseudo = '';
 		var $cinema = $('#cinema');
@@ -370,6 +370,11 @@
 
 		$username.val(readCookie("username"));
 		$avatarLink.val(readCookie("avatar"));
+		$pseudo.val(readCookie("username"));
+		$image.val(readCookie("avatar"));
+		$usernameColor.val(readCookie("usernameColor"));
+   		$usernameGlow.val(readCookie("usernameGlow"));
+   		$background.val(readCookie("background"));
 
 		document.getElementById('body').style.backgroundImage = "url(background.png)";
 		function changeColor(data)
@@ -407,9 +412,12 @@
    			document.getElementById('settings').style.display = "none";
    			document.getElementById('image').value = escapeHtml($image);
    			document.getElementById('pseudo').value = escapeHtml($pseudo);
-   			$usernameColor.val(readCookie("usernameColor"));
+   			$pseudo.val(readCookie("username"));
+   			$image.val(readCookie("avatar"));
+   			//$usernameColor.val(readCookie("usernameColor"));
    			$usernameGlow.val(readCookie("usernameGlow"));
    			$background.val(readCookie("background"));
+
 		}
 
 		/*function autoLaunch(data)
@@ -460,8 +468,6 @@
 
 		function changeInfo()
 		{
-			$image = escapeHtml(document.getElementById('image').value);
-			$pseudo = escapeHtml(document.getElementById('pseudo').value);
 			if ($colorTheme.val() != "")
 				{
 					document.getElementById('header').style.backgroundColor = escapeHtml($colorTheme.val()).toString();
@@ -475,13 +481,13 @@
 				}
 			if ($usernameColor.val() != "")
 				{
-					createCookie("usernameColor", escapeHtml($usernameColor.val()));
+					createCookie("usernameColor", escapeHtml(document.getElementById('usernameColor').value));
 				}
 			else
 				createCookie("usernameColor", "");
 			if ($usernameGlow.val() != "")
 				{
-					createCookie("usernameGlow", escapeHtml($usernameGlow.val()));
+					createCookie("usernameGlow", escapeHtml(document.getElementById('usernameGlow').value));
 				}
 			else
 				createCookie("usernameGlow", "");
@@ -490,9 +496,9 @@
 			else
 				document.getElementById('body').style.backgroundImage = "url(" + escapeHtml($background.val()) + ")";
 			createCookie("background", escapeHtml($background.val()));
-			socket.emit('send message', $pseudo.toString(), $image.toString(), false);
-			createCookie("username", $pseudo);
-			createCookie("avatar", $image);
+			socket.emit('send message', document.getElementById('pseudo').value, document.getElementById('image').value, escapeHtml(document.getElementById('usernameColor').value), escapeHtml(document.getElementById('usernameGlow').value), false);
+			createCookie("username", document.getElementById('pseudo').value);
+			createCookie("avatar", document.getElementById('image').value);
 			document.getElementById('config').style.display = "none";
    			document.getElementById('ok').style.display = "none";
    			document.getElementById('usersCol').style.display = "block";
@@ -548,13 +554,13 @@
 
 			$messageForm.submit(function(e){
 				e.preventDefault();
-				socket.emit('send message', $message.val(), null, true);
+				socket.emit('send message', $message.val(), null, null, null, true);
 				$message.val('');
 			});
 
 			socket.on('new message', function(data){
 				if (data.alert == 0){
-				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + readCookie("usernameColor") + ';' + returnGlow(readCookie("usernameGlow")) + '">' + escapeHtml(data.user) + '</strong><br />' + /*isYoutube(*/linkify(escapeHtml(data.msg))/*)*/ +'</li>')}
+				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + /*isYoutube(*/linkify(escapeHtml(data.msg))/*)*/ +'</li>')}
 				else if (data.alert == 1)
 					$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
 				else
@@ -567,7 +573,7 @@
 
 			$("#login").click(function(e){
 				e.preventDefault();
-				socket.emit('new user', $username.val(), $avatarLink.val(), true, function(data){
+				socket.emit('new user', $username.val(), $avatarLink.val(), readCookie("usernameColor"), readCookie("usernameGlow"), true, function(data){
 					if(data)
 					{
 						$userFormArea.hide();
@@ -580,8 +586,8 @@
 							document.getElementById('body').style.backgroundImage = "url(" + readCookie("background") + ")";
 					}
 				});
-				$pseudo = escapeHtml($username.val());
-				$image = escapeHtml($avatarLink.val());
+				//$pseudo = escapeHtml($username.val());
+				//$image = escapeHtml($avatarLink.val());
 				createCookie("username", $pseudo);
 				createCookie("avatar", $image);
 				document.getElementById('pseudo').value = $username.val();
