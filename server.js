@@ -19,6 +19,7 @@ io.sockets.on('connection', function(socket){
 
 	//Disconnect
 	socket.on('disconnect', function(data){
+		this.transport.close();
 		users.splice(users.indexOf(socket.username), 1);
 		io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, alert: 2});
 		updateUsernames();
