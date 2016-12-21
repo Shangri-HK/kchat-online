@@ -139,6 +139,7 @@
 		var $usernameColor = $('#usernameColor');
 		var $usernameGlow = $('#usernameGlow');
 		var isCinema = false;
+		var youtubeId;
 
 		//Setting inputs from cookies
 		$username.val(readCookie("username"));
@@ -184,7 +185,8 @@
 			else
 				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(background.png)'});
 			document.getElementById('cinemaOn').style.display = "none";
-			window.scrollTo(0,document.body.scrollHeight).fadIn();
+			window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+			//window.scrollTo(0,document.body.scrollHeight).fadIn();
 			//$('html, body').css({'height': '100%'};
 		}
 
@@ -230,51 +232,49 @@
 
 		}
 
-		function autoLaunch(data)
-		{
-			alert(data);
+		function autoLaunch()
+		{	
+			if (isCinema == false)
+				cinemaOn();
+			$youtubeLink.val(youtubeId);
+			launchVideo();	
 		}
 
 		function isYoutube(data)
 		{
-			return (data);
-			alert("n" + data.search("\""));
-			if (data.indexOf('"') == -1)
-				return (data);
-			alert("o" + href.indexOf('/'));
 			var href = data.split('"')[1];
-			if (href.indexOf('/') == -1)
-				return (data);
-			alert("ok");
-			var embed = href.split('/');
+			if(href != null)
+				var embed = href.split('/');
+			else
+				return data;
+
 			if (embed != null)
 			{
 				for (var i = 0; i < embed.length; i++)
 				{
 					if (embed[i] == "www.youtube.com" || embed[i] == "www.youtube.com&quot" || embed[i] == "www.youtu.be" || embed[i] == "www.youtu.be&quot")
 					{
-
-						return data + '  ' + '<a id="myLink" href="#" onclick="autoLaunch(' +  embed[++i] + ');">' + ' <strong style="color:red;">► play on cinema mode.</strong></a>';
-						//alert("its youtube");
-						cinemaOn();
+						youtubeId = embed[i] + "/" + embed[++i];
+						return data + '  ' + '<a id="myLink" href="#" onclick="autoLaunch()">' + ' <strong style="color:black;">► play on cinema mode.</strong></a>';
 					}
-						//document.getElementById('youtubeWindow').src = "https://www.youtube.com/embed/" + embed[i+1].split('=')[1].split('&')[0];
 				}
 			}
 			return data;
-			//<a href="http://www.youtube.com" target="_blank">www.youtube.com</a>
 		}
 
 
 		//Initialize the youtube video link
 		function launchVideo()
 		{
+
 			var link = $youtubeLink.val();
 			var embed = link.split('/');
 			for (var i = 0; i < embed.length; i++)
 			{
 				if (embed[i] == "www.youtube.com")
-					document.getElementById('youtubeWindow').src = "https://www.youtube.com/embed/" + embed[i+1].split('=')[1].split('&')[0];
+				{
+					document.getElementById('youtubeWindow').src = "https://www.youtube.com/embed/" + embed[i+1].split('=')[1].split('&')[0] + "?rel=0&autoplay=1";
+				}
 			}
 		}
 
