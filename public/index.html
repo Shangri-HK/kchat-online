@@ -241,6 +241,21 @@
 			launchVideo();	
 		}
 
+		function isImg(data)
+		{
+			var href = data.split('"')[1];
+			if(href != null)
+				var embed = href.split('/');
+			else
+				return data;
+			var img = embed[embed.length - 1].split('.');
+			if (img[0].indexOf("?") != -1)
+				return data;
+			if(img[1] == "jpg" || img[1] == "png" || img[1] == "bmp" || img[1] == "gif" || img[1] == "jpeg")
+				return '<img src="' + href + '" style="height: 200px; width: auto;"/>' + data;
+			return data;
+		}
+
 		function isYoutube(data)
 		{
 			var href = data.split('"')[1];
@@ -248,7 +263,6 @@
 				var embed = href.split('/');
 			else
 				return data;
-
 			if (embed != null)
 			{
 				for (var i = 0; i < embed.length; i++)
@@ -401,7 +415,10 @@
 			//Message emit on chat or on user's connection/deconnection
 			socket.on('new message', function(data){
 				if (data.alert == 0){
-				$chat.append('<li class="list-group-item affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + isYoutube(linkify(escapeHtml(data.msg))) +'</li>')}
+					var text = linkify(escapeHtml(data.msg));
+					text = isYoutube(text);
+					text = isImg(text);
+				$chat.append('<li class="list-group-item affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + text  +'</li>')}
 				else if (data.alert == 1)
 					$chat.append('<li class="list-group-item affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
 				else
