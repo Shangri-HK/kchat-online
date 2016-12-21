@@ -10,107 +10,109 @@
 </head>
 <body id="body">
 
-
-	<!-- LOGO HEADER -->
-	<div id="header">
-		<a href="kchat-online.herokuapp.com"><img src="logo.png" id="logo"/></a>
-	</div>
-	<div class="container" id="container">
-
-
-
-		<!-- MODE CINEMA -->
-		<input type="submit" id="cinemaOn" class="btn btn-primary" value="Show cinema mode"  style="display: none;" onclick="cinemaOn()" /><br />
-		<div id="cinema" style="display:none;"/>
-			<iframe  id="youtubeWindow" width="1000" height="500" src="https://www.youtube.com/embed/" style="margin-top: 5px; margin-left: 102px;"></iframe><br />
-			<div id="youtubeForm">
-				<input class="form-control" id="youtubeLink" style="width:800px; float:left; margin-left: 102px; background-color: grey;"/>
-				<input type="submit" id="youtubeSubmit" class="btn btn-primary" value="OK"  onclick="launchVideo()" />
-			</div>
-			<input type="submit" id="cinemaOut" class="btn btn-primary" value="Hide cinema mode"  onclick="cinemaOut()" />
-		</div>
-
-
-
-		<!-- LOGIN -->
-		<div id="userFormArea" class="row">
-			<div class="col-md-12">
-				<form id="userForm">
-					<div class="form-group">
-						<label style="color: white">Enter Username</label>
-						<input class="form-control" id="username" />
-						<br />
-						<label style="color: white">Avatar Link</label>
-						<input class="form-control" id="avatarLink" /><br />
-						<input type="submit" id="login" class="btn btn-primary" value="Login" /><br />
-					</div>
-				</form>
-			</div>
-		</div>
+<div id="header">
+        <a href="kchat-online.herokuapp.com"><img src="logo.png" id="logo"/></a>
+            	<input type="submit" id="cinemaOut" class="btn btn-primary" value="Hide cinema mode"  style="display: none;" onclick="cinemaOut()" />
+        <input type="submit" id="cinemaOn" class="btn btn-primary" value="Show cinema mode"  style="display: none;" onclick="cinemaOn()" /><br />
+    </div>
+    <!-- MODE CINEMA -->
+        <div id="cinema" style="display:none;"/>
+            <iframe  id="youtubeWindow" width="1000" height="500" src="https://www.youtube.com/embed/" style="margin-top: 5px; margin-left: 118px;"></iframe><br />
+            <div id="youtubeForm">
+                <input class="form-control" id="youtubeLink" style="width:800px; float:left; margin-left: 118px; background-color: grey;"/>
+                <input type="submit" id="youtubeSubmit" class="btn btn-primary" value="OK"  onclick="launchVideo()" />
+            </div>
+        </div>
+<!-- LOGIN -->
+        <div id="userFormArea" class="row">
+            <div class="col-md-12">
+                <form id="userForm">
+                    <div class="form-group">
+                        <label style="color: white">Enter Username</label>
+                        <input class="form-control" id="username" />
+                        <br />
+                        <label style="color: white">Avatar Link</label>
+                        <input class="form-control" id="avatarLink" /><br />
+                        <input type="submit" id="login" class="btn btn-primary" value="Login" /><br />
+                    </div>
+                </form>
+            </div>
+        </div>
 
 
 
-		<!-- MAIN WINDOW -->
-		<div id="messageArea" class="row">
+<div class="row" id="messageArea">
+    <div class="col-md-2"></div>
+    <div class="col-md-2">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class="col-md-12" id="userList">
+                    <form class="col-md-12" id="config" style="display: none;">
+                        <label style="color: white; margin-top: 20px;">Username</label>
+                        <textarea class="form-control" id="pseudo" style="width: 100%"></textarea>
+                        <label style="color: white">Avatar</label>
+                        <textarea class="form-control" id="image" style="width: 100%"></textarea>
+                        <label style="color: white">Username color</label>
+                        <textarea class="form-control" id="usernameColor" style="width: 100%" placeholder="ex: #FA4D4D"></textarea>
+                        <label style="color: white">Username Glow</label>
+                        <textarea class="form-control" id="usernameGlow" style="width: 100%" placeholder="ex: #FA4D4D"></textarea>
+                        <label style="color: white">Background</label>
+                        <textarea class="form-control" id="background" style="width: 100%"></textarea>
+                        <label style="color: white">Color Theme</label>
+                        <textarea class="form-control" id="colorTheme" style="width: 100%" placeholder="ex: #FA4D4D"></textarea>
+                        <div style="display: flex; width:100%; flex-wrap: wrap;">
+                            <input type="button" id="defaultColor" style="background-color: #FA4D4D;flex-grow: 1; min-width: 25%;" onclick="changeColor('#FA4D4D')"/>
+                            <input type="button" id="blue" style="background-color: #4F94FA;flex-grow: 1; min-width: 25%;" onclick="changeColor('#4F94FA')"/>
+                            <input type="button" id="black" style="background-color: #191919;flex-grow: 1; min-width: 25%;" onclick="changeColor('#191919')"/>
+                            <input type="button" id="grey" style="background-color: #9F9F9F;flex-grow: 1; min-width: 25%;" onclick="changeColor('#9F9F9F')"/>
+                            <input type="button" id="green" style="background-color: #94FA50;flex-grow: 1; min-width: 25%;" onclick="changeColor('#94FA50')"/>
+                            <input type="button" id="orange" style="background-color: #FAB04E;flex-grow: 1; min-width: 25%;" onclick="changeColor('#FAB04E')"/>
+                        </div>
+                    </form>
+                   
 
 
 
-			<!-- LEFT COLUMN -->
-			<div class="col-md-4" id="userList" style="overflow: auto;">
+                    <!-- ONLINE USERS -->
+                    <div class="well" id="usersCol">
+                        <h4>Online Users</h4>
+                        <ul class="list-group" id="users"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 text-center">
+                <button id="settings" class="btn btn-primary" onclick="showConfig()">Settings</button>
+                 <input type="button" id="ok" class="btn btn-primary" value="OK" style="display: none;" onclick="changeInfo()" />
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
 
 
 
-				<!-- SETTINGS -->
-				<form class="col-md-12" id="config" style="display: none;">
-					<label style="color: white; margin-top: 20px;">Username</label>
-					<textarea class="form-control" id="pseudo"></textarea>
-					<label style="color: white">Avatar</label>
-					<textarea class="form-control" id="image"></textarea>
-					<label style="color: white">Username color</label>
-					<textarea class="form-control" id="usernameColor" placeholder="ex: #FA4D4D"></textarea>
-					<label style="color: white">Username Glow</label>
-					<textarea class="form-control" id="usernameGlow" placeholder="ex: #FA4D4D"></textarea>
-					<label style="color: white">Background</label>
-					<textarea class="form-control" id="background"></textarea>
-					<label style="color: white">Color Theme</label>
-					<textarea class="form-control" id="colorTheme" placeholder="ex: #FA4D4D"></textarea>
-					<div style="display: flex; flex-wrap: nowrap;">
-						<input type="button" id="defaultColor" style="background-color: #FA4D4D" onclick="changeColor('#FA4D4D')"/>
-						<input type="button" id="blue" style="background-color: #4F94FA" onclick="changeColor('#4F94FA')"/>
-						<input type="button" id="black" style="background-color: #191919" onclick="changeColor('#191919')"/>
-						<input type="button" id="grey" style="background-color: #9F9F9F" onclick="changeColor('#9F9F9F')"/>
-						<input type="button" id="green" style="background-color: #94FA50" onclick="changeColor('#94FA50')"/>
-						<input type="button" id="orange" style="background-color: #FAB04E" onclick="changeColor('#FAB04E')"/>
-					</div>
-				</form>
-				<input type="button" id="ok" class="btn btn-primary" value="OK" style="display: none;" onclick="changeInfo()" />
 
 
 
-				<!-- ONLINE USERS -->
-				<div class="well" id="usersCol">
-					<h4>Online Users</h4>
-					<ul class="list-group" id="users"></ul>
-				</div>
-				
-			</div>
 
 
 
-			<!-- CHAT -->
-			<div class="col-md-8" id="chatWindow">
-
-				<ul class="list-group" id="chat"></ul>
-				<input type="button" id="settings" class="btn btn-primary" value="Settings"  onclick="showConfig()" />
-				<form id="messageForm">
-					<div class="form-group">
-						<textarea class="form-control" id="message"></textarea>
-						<br />
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+    <div class="col-md-6" id="chatWindow">
+        <ul id="chat" class="list-group col-md-12">
+        </ul>
+    </div>
+    <form id="messageForm"  class="col-md-6">
+            <div class="form-group">
+                <textarea class="form-control" id="message"></textarea>
+                <br />
+                </div>
+        </form>
+    <div class="col-md-2"></div>
+</div>
 
 	<script>
 		var socket = io.connect();
@@ -136,6 +138,7 @@
 		var $colorTheme = $('#colorTheme');
 		var $usernameColor = $('#usernameColor');
 		var $usernameGlow = $('#usernameGlow');
+		var isCinema = false;
 
 		//Setting inputs from cookies
 		$username.val(readCookie("username"));
@@ -158,6 +161,8 @@
 			document.getElementById('settings').style.border = "1px solid " + data;
 			document.getElementById('cinemaOn').style.border = "1px solid " + data;
 			document.getElementById('cinemaOn').style.backgroundColor = data;
+			document.getElementById('cinemaOut').style.border = "1px solid " + data;
+			document.getElementById('cinemaOut').style.backgroundColor = data;
 			createCookie("colorTheme", data);
 		}
 
@@ -165,18 +170,21 @@
 		//Enable the cinema mode
 		function cinemaOn()
 		{
+			isCinema = true;
 			$('#cinema').fadeIn();
+			document.getElementById('cinemaOut').style.display = "initial";
 			document.getElementById('chat').style.height = "320px";
 			document.getElementById('message').style.height = "30px";
-			document.getElementById('container').style.marginTop = "0px";
-			document.getElementById('chat').style.marginBottom = "0px";
+			//document.getElementById('container').style.marginTop = "0px";
+			//document.getElementById('chat').style.marginBottom = "0px";
 			document.getElementById('userList').style.height = "320px";
-			document.getElementById('settings').style.height = "20px";
-			if (readCookie("background" != ""))
+			document.getElementById('chatWindow').style.height = "320px";
+			if (readCookie("background") != "")
 				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(' + readCookie("background") + ')'});
 			else
 				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(background.png)'});
-			$('#cinemaOn').fadeOut();
+			document.getElementById('cinemaOn').style.display = "none";
+			window.scrollTo(0,document.body.scrollHeight).fadIn();
 			//$('html, body').css({'height': '100%'};
 		}
 
@@ -184,11 +192,22 @@
 		//Disable cinema mode
 		function cinemaOut()
 		{
-			document.getElementById('container').style.marginTop = "20px";
+			isCinema = false;
+			//document.getElementById('container').style.marginTop = "20px";
+			document.getElementById('cinemaOut').style.display = "none";
+			document.getElementById('chat').style.height = "600px";
+			document.getElementById('message').style.height = "100px";
+			//document.getElementById('container').style.marginTop = "0px";
+			//document.getElementById('chat').style.marginBottom = "0px";
+			document.getElementById('userList').style.height = "600px";
+			document.getElementById('chatWindow').style.height = "600px";
+			//document.getElementById('settings').style.height = "20px";
 			$('#cinema').fadeOut();
 			$('#cinemaOn').fadeIn();
-			if (readCookie("background" != ""))
+			if (readCookie("background") != "")
+			{
 				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(' + readCookie("background") + ')'});
+			}
 			else
 				$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) ), url(background.png)'});
 		}
@@ -198,11 +217,11 @@
 		function showConfig()
 		{
    			document.getElementById('config').style.display = "block";
-   			document.getElementById('ok').style.display = "block";
+   			document.getElementById('ok').style.display = "initial";
    			document.getElementById('usersCol').style.display = "none";
    			document.getElementById('settings').style.display = "none";
-   			document.getElementById('image').value = escapeHtml($image);
-   			document.getElementById('pseudo').value = escapeHtml($pseudo);
+   			document.getElementById('image').value = escapeHtml($image.val());
+   			document.getElementById('pseudo').value = escapeHtml($pseudo.val());
    			$pseudo.val(readCookie("username"));
    			$image.val(readCookie("avatar"));
    			//$usernameColor.val(readCookie("usernameColor"));
@@ -218,14 +237,20 @@
 
 		function isYoutube(data)
 		{
-			return (data);
+			alert("n" + data.search("\""));
+			if (data.indexOf('"') == -1)
+				return (data);
+			alert("o" + href.indexOf('/'));
 			var href = data.split('"')[1];
+			if (href.indexOf('/') == -1)
+				return (data);
+			alert("ok");
 			var embed = href.split('/');
 			if (embed != null)
 			{
 				for (var i = 0; i < embed.length; i++)
 				{
-					if (embed[i] == "www.youtube.com" || embed[i] == "www.youtube.com&quot")
+					if (embed[i] == "www.youtube.com" || embed[i] == "www.youtube.com&quot" || embed[i] == "www.youtu.be" || embed[i] == "www.youtu.be&quot")
 					{
 
 						return data + '  ' + '<a id="myLink" href="#" onclick="autoLaunch(' +  embed[++i] + ');">' + ' <strong style="color:red;">► play on cinema mode.</strong></a>';
@@ -281,9 +306,15 @@
 			else
 				createCookie("usernameGlow", "");
 			if (escapeHtml($background.val()) == "")
-				document.getElementById('body').style.backgroundImage = "url(background.png)";
+				if (isCinema == true)
+					$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(background.png)'});
+				else
+					document.getElementById('body').style.backgroundImage = "url(background.png)";
 			else
-				document.getElementById('body').style.backgroundImage = "url(" + escapeHtml($background.val()) + ")";
+				if (isCinema == true)
+					$('#body').css({'background': 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(' + escapeHtml($background.val()) + ')'});
+				else
+					document.getElementById('body').style.backgroundImage = "url(" + escapeHtml($background.val()) + ")";
 			createCookie("background", escapeHtml($background.val()));
 			socket.emit('send message', document.getElementById('pseudo').value, document.getElementById('image').value, escapeHtml(document.getElementById('usernameColor').value), escapeHtml(document.getElementById('usernameGlow').value), false);
 			createCookie("username", document.getElementById('pseudo').value);
@@ -298,8 +329,8 @@
 			document.getElementById('config').style.display = "none";
    			document.getElementById('ok').style.display = "none";
    			document.getElementById('usersCol').style.display = "block";
-   			document.getElementById('settings').style.display = "block";
-   			document.getElementById('settings').style.marginTop = "182px";
+   			document.getElementById('settings').style.display = "initial";
+   			//document.getElementById('settings').style.marginTop = "182px";
 		}
 
 
@@ -368,11 +399,11 @@
 			//Message emit on chat or on user's connection/deconnection
 			socket.on('new message', function(data){
 				if (data.alert == 0){
-				$chat.append('<li class="list-group-item" id="affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + isYoutube(linkify(escapeHtml(data.msg))) +'</li>')}
+				$chat.append('<li class="list-group-item affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + isYoutube(linkify(escapeHtml(data.msg))) +'</li>')}
 				else if (data.alert == 1)
-					$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
+					$chat.append('<li class="list-group-item affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
 				else
-					$chat.append('<li class="list-group-item" id="affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' has disconnected.<strong/>')
+					$chat.append('<li class="list-group-item affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' has disconnected.<strong/>')
 				var x = document.getElementById('chat'); 
 				x.scrollTop = x.scrollHeight;
 				audio.volume = 0.2;
@@ -396,8 +427,8 @@
 							document.getElementById('body').style.backgroundImage = "url(" + readCookie("background") + ")";
 					}
 				});
-				createCookie("username", $pseudo);
-				createCookie("avatar", $image);
+				createCookie("username", $pseudo.val());
+				createCookie("avatar", $image.val());
 				document.getElementById('pseudo').value = $username.val();
 				$username.val('');
 			});
