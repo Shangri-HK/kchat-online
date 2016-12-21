@@ -68,7 +68,10 @@
                             <input type="button" id="grey" style="background-color: #9F9F9F;flex-grow: 1; min-width: 25%;" onclick="changeColor('#9F9F9F')"/>
                             <input type="button" id="green" style="background-color: #94FA50;flex-grow: 1; min-width: 25%;" onclick="changeColor('#94FA50')"/>
                             <input type="button" id="orange" style="background-color: #FAB04E;flex-grow: 1; min-width: 25%;" onclick="changeColor('#FAB04E')"/>
+                            
                         </div>
+                        <button type="button" id="sound" class="btn btn-primary buttonSelect" onclick="soundOnOff()">Sound ON/OFF</button>
+                        <button type="button" id="textStyle" class="btn btn-primary buttonSelect" onclick="textBold()">Text Style</button>
                     </form>
                    
 
@@ -338,7 +341,21 @@
 			showOffSettings();
 		}
 
+		function soundOnOff()
+		{
+			if (readCookie("sound") == "N")
+				createCookie("sound", "Y");
+			else
+				createCookie("sound", "N");
+		}
 
+		function textBold()
+		{
+			if (readCookie("textStyle") == "none")
+				createCookie("textStyle", "bold");
+			else
+				createCookie("textStyle", "none");
+		}
 		//Disable the settings sidebar
 		function showOffSettings()
 		{
@@ -418,7 +435,11 @@
 					var text = linkify(escapeHtml(data.msg));
 					text = isYoutube(text);
 					text = isImg(text);
-				$chat.append('<li class="list-group-item affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + text  +'</li>')}
+					if (readCookie("textStyle") == "bold")
+						$chat.append('<li class="list-group-item affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><span style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '<br /><strong>' + text  +'</strong></li>');
+					else
+						$chat.append('<li class="list-group-item affichage"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + text  +'</li>');
+				}
 				else if (data.alert == 1)
 					$chat.append('<li class="list-group-item affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
 				else
@@ -426,7 +447,8 @@
 				var x = document.getElementById('chat'); 
 				x.scrollTop = x.scrollHeight;
 				audio.volume = 0.2;
-				audio.play();
+				if (readCookie("sound") == "Y")
+						audio.play();
 			});
 
 
