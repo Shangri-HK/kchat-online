@@ -4,7 +4,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 users = [];
 connections = [];
-transports: ['polling']
+//transports: ['polling']
 app.use(express.static(__dirname + '/public'));
 server.listen(process.env.PORT ||3000);
 console.log('Server running...');
@@ -24,8 +24,11 @@ io.sockets.on('connection', function(socket){
 		updateUsernames();
 		connections.splice(connections.indexOf(socket), 1);
 		console.log('Disconnected: %s sockets connected', connections.length);
-		this.transport.close();
 	});
+
+	//socket.on('close', function(){
+	//this.transport.close();
+	 //});
 
 	//Send Message
 	socket.on('send message', function(data, avatar, color, glow, add){
