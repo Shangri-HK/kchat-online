@@ -118,6 +118,11 @@
     		color: black;
 			overflow:auto;
 		}
+		#emojis
+		{
+			width: 25px;
+			height: auto;
+		}
 		#chatWindow
 		{
 			background: rgba(204, 204, 204, 0.4) none repeat scroll 0 0 / 360px 600px;
