@@ -118,7 +118,7 @@
     		color: black;
 			overflow:auto;
 		}
-		#emojis
+		.emojis
 		{
 			width: 25px;
 			height: auto;
