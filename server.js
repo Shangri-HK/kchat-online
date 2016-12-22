@@ -44,7 +44,7 @@ io.sockets.on('connection', function(socket){
 			socket.avatar = avatar;
 			socket.color = color;
 			socket.glow = glow;
-			updateUsernames();
+			//updateUsernames();
 		}
 	});
 
