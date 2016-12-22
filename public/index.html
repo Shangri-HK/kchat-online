@@ -561,6 +561,7 @@
 			$messageForm.submit(function(e){
 				e.preventDefault();
 				socket.emit('send message', $message.val(), null, null, null, true);
+				socket.emit('writing', logName, true);
 				$message.val('');
 			});
 
