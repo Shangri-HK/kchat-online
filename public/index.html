@@ -511,12 +511,24 @@
 
 			});
 
+			if (isCinema == true)
+				document.getElementById('userInfo').style.height = "320px";
+			document.getElementById('chatWindow').style.display = "none";
+			$('#message').fadeOut();
+			document.getElementById('userAvatar').style.display = 'none';
+			document.getElementById('usernameInfo').innerHTML = "";
+			document.getElementById('usernameColorInfo').innerHTML = "";
+			document.getElementById('usernameGlowInfo').innerHTML = "";
+			$('#userInfo').fadeIn();
+			$('#exitProfil').fadeIn();
+
 			setTimeout(function dispUser() {
 				if (isCinema == true)
 					document.getElementById('userInfo').style.height = "320px";
 				document.getElementById('chatWindow').style.display = "none";
 				$('#message').fadeOut();
 				if (avatarInfo != "") {
+					document.getElementById('userAvatar').style.display = 'block';
 					document.getElementById('userAvatar').src = avatarInfo;
 				} else {
 					document.getElementById('userAvatar').style.display = 'none';
