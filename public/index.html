@@ -175,6 +175,10 @@
 		var isCinema = false;
 		var youtubeId;
 		var logName;
+		var usernameInfo;
+		var avatarInfo;
+		var colorInfo;
+		var glowInfo;
 
 		//Setting inputs from cookies
 		$username.val(readCookie("username"));
@@ -502,18 +506,23 @@
 			socket.emit('user info', id);
 			socket.on('get user info', function(data)
 			{
-				if (isCinema == true)
+				usernameInfo = data.name;
+				avatarInfo = data.avatar;;
+				colorInfo = data.color;
+				glowInfo = data.glow;
+				
+			});
+			if (isCinema == true)
 					document.getElementById('userInfo').style.height = "320px";
 				document.getElementById('chatWindow').style.display = "none";
 				$('#message').fadeOut();
-				document.getElementById('userAvatar').src = data.avatar;
-				document.getElementById('usernameInfo').innerHTML = data.name;
-				document.getElementById('avatarInfo').innerHTML = '<a href="' + data.avatar + '" target="_blank"><strong>' + data.avatar + '</strong></a>';
-				document.getElementById('usernameColorInfo').innerHTML = data.color;
-				document.getElementById('usernameGlowInfo').innerHTML = data.glow;
+				document.getElementById('userAvatar').src = avatarInfo;
+				document.getElementById('usernameInfo').innerHTML = usernameInfo;
+				document.getElementById('avatarInfo').innerHTML = '<a href="' + avatarInfo + '" target="_blank"><strong>' + avatarInfo + '</strong></a>';
+				document.getElementById('usernameColorInfo').innerHTML = colorInfo;
+				document.getElementById('usernameGlowInfo').innerHTML = glowInfo;
 				$('#userInfo').fadeIn();
 				$('#exitProfil').fadeIn();
-			});
 		}
 
 		function exitProfil()
