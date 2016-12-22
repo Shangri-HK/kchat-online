@@ -3,6 +3,9 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 users = [];
+avatars = [];
+colors = [];
+glows = [];
 connections = [];
 //transports: ['polling']
 app.use(express.static(__dirname + '/public'));
@@ -21,6 +24,9 @@ io.sockets.on('connection', function(socket){
 	socket.on('disconnect', function(data){
 		if (socket.username != null)
 		{
+			avatars.splice(users.indexOf(socket.username), 1);
+			colors.splice(users.indexOf(socket.username), 1);
+			glows.splice(users.indexOf(socket.username), 1);
 			users.splice(users.indexOf(socket.username), 1);
 			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, alert: 2});
 			updateUsernames();
@@ -34,10 +40,16 @@ io.sockets.on('connection', function(socket){
 	//this.transport.close();
 	 //});
 
+	 socket.on('writing', function(name, stop)
+	 {
+	 	io.sockets.emit('is writing', {name: socket.username, stop: stop});
+	 });
+
 	 socket.on('user info', function(name, avatar, color, glow)
 	 {
-	 	//var user = users[users.indexOf(socket.username)];
-	 	io.sockets.emit('get user info', {name: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow});
+	 	var user = users.indexOf(name);
+
+	 	io.sockets.emit('get user info', {name: name, avatar: avatars[user], color: colors[users], glow: glows[user]});
 	 });
 
 
@@ -64,6 +76,9 @@ io.sockets.on('connection', function(socket){
 		socket.glow = glow;
 		if(add){
 			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow, alert: 1});
+		avatars.push(socket.avatar);
+		colors.push(socket.color);
+		glows.push(socket.glow);
 		users.push(socket.username);
 		}
 		updateUsernames();
