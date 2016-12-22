@@ -501,24 +501,33 @@
 			//faire en sorte d'afficher juste pour un seul socket
 			//j'ai essayé de faire l'affichage juste en client en dehors du socket.on, mais les variables s'initialisait avec un clique de retard
 			//genre si je clique sur A, ça va rien afficher parce que les var sont null, et si je clique ensuite sur B, ça affiche le profil de A parce que les var ont été initialisés pour A juste avant, tu vois le truc ?
-			
+
 			socket.on('get user info', function(data){
 				usernameInfo = data.name;
-				avatarInfo = data.avatar;;
+				avatarInfo = data.avatar;
 				colorInfo = data.color;
 				glowInfo = data.glow;
-			if (isCinema == true)
+
+
+			});
+
+			setTimeout(function dispUser() {
+				if (isCinema == true)
 					document.getElementById('userInfo').style.height = "320px";
 				document.getElementById('chatWindow').style.display = "none";
 				$('#message').fadeOut();
-				document.getElementById('userAvatar').src = avatarInfo;
+				if (avatarInfo != "") {
+					document.getElementById('userAvatar').src = avatarInfo;
+				} else {
+					document.getElementById('userAvatar').style.display = 'none';
+				}
 				document.getElementById('usernameInfo').innerHTML = usernameInfo;
 				document.getElementById('avatarInfo').innerHTML = '<a href="' + avatarInfo + '" target="_blank"><strong>' + avatarInfo + '</strong></a>';
 				document.getElementById('usernameColorInfo').innerHTML = colorInfo;
 				document.getElementById('usernameGlowInfo').innerHTML = glowInfo;
 				$('#userInfo').fadeIn();
 				$('#exitProfil').fadeIn();
-				});
+			}, 1000);
 
 		}
 
@@ -628,7 +637,7 @@
 				var html = '';
 				for(i = 0; i < data.length; i++)
 				{
-					html += '<li class="onlineUser" id="' + data[i] + '" onclick="userInfo(this.id)">' + escapeHtml(data[i]) + '</li>';
+					html += '<li class="onlineUser" id="' + data[i] + '" onclick="userInfo(this.id, '+data[i]+')">' + escapeHtml(data[i]) + '</li>';
 				}
 				$users.html(html);
 			});
