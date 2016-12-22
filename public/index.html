@@ -94,7 +94,9 @@
 	                    <!-- ONLINE USERS -->
 	                    <div class="well" id="usersCol">
 	                        <h4>Online Users</h4>
-	                        <ul class="list-group" id="users"></ul>
+	                        <ul class="list-group" id="users">
+
+							</ul>
 	                    </div>
 	                </div>
 	            </div>
@@ -608,7 +610,7 @@
 				var html = '';
 				for(i = 0; i < data.length; i++)
 				{
-					html += '<button class="list-group-item" id="' + data[i] + '" onclick="userInfo(this.id)">' + escapeHtml(data[i]) + '</button>';
+					html += '<li class="onlineUser" id="' + data[i] + '" onclick="userInfo(this.id)">' + escapeHtml(data[i]) + '</li>';
 				}
 				$users.html(html);
 			});
