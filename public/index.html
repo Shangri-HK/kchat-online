@@ -116,9 +116,26 @@
 
 
 
-
+	    <div class="col-md-6 userInfo" id="userInfo" style="display:none;">
+	    	<div class="col-md-4 profil">
+		    	<img id="userAvatar" src="" style="width: 100%; height: 270px;"/>
+		    	<label class="infoList">Username</label><br />
+		    	<p id="usernameInfo" class="detailInfo">Name</p>
+		    	<label class="infoList">Avatar Link</label><br />
+		    	<p id="avatarInfo" class="detailInfo">http://avatar</p>
+		    	<label class="infoList">Username Color</label><br />
+		    	<p id="usernameColorInfo" class="detailInfo">#000000</p>
+		    	<label class="infoList">Username Glow</label><br />
+		    	<p id="usernameGlowInfo" class="detailInfo">#000000</p><br />
+	    	</div>
+	    </div>
+	    <div class="col-md-6">
+	    	<div class="col-md-4">
+	    		<button type="button" id="exitProfil" class="btn btn-primary color" style="display:none" onclick="exitProfil();">Exit Profile</button>
+	    	</div>
+	    </div>
 	    <!-- CHAT WINDOW -->
-	    <div class="col-md-6" id="chatWindow">
+	    <div class="col-md-6 chatWindow" id="chatWindow">
 	        <ul id="chat" class="list-group col-md-12 color">
 	        </ul>
 	    </div>
@@ -209,6 +226,7 @@
 			$('#cinema').fadeIn();
 			document.getElementById('cinemaOut').style.display = "initial";
 			document.getElementById('chat').style.height = "320px";
+			document.getElementById('userInfo').style.height = "320px";
 			document.getElementById('message').style.height = "40px";
 			//document.getElementById('container').style.marginTop = "0px";
 			//document.getElementById('chat').style.marginBottom = "0px";
@@ -233,6 +251,7 @@
 			document.getElementById('youtubeWindow').src = "https://www.youtube.com/embed/";
 			document.getElementById('cinemaOut').style.display = "none";
 			document.getElementById('chat').style.height = "600px";
+			document.getElementById('userInfo').style.height = "600px";
 			document.getElementById('message').style.height = "100px";
 			document.getElementById('userList').style.height = "600px";
 			document.getElementById('chatWindow').style.height = "600px";
@@ -478,6 +497,33 @@
 			return data;
 		}
 
+		function userInfo(id)
+		{
+			socket.emit('user info', id);
+			socket.on('get user info', function(data)
+			{
+				if (isCinema == true)
+					document.getElementById('userInfo').style.height = "320px";
+				document.getElementById('chatWindow').style.display = "none";
+				$('#message').fadeOut();
+				document.getElementById('userAvatar').src = data.avatar;
+				document.getElementById('usernameInfo').innerHTML = data.name;
+				document.getElementById('avatarInfo').innerHTML = '<a href="' + data.avatar + '" target="_blank"><strong>' + data.avatar + '</strong></a>';
+				document.getElementById('usernameColorInfo').innerHTML = data.color;
+				document.getElementById('usernameGlowInfo').innerHTML = data.glow;
+				$('#userInfo').fadeIn();
+				$('#exitProfil').fadeIn();
+			});
+		}
+
+		function exitProfil()
+		{
+				document.getElementById('userInfo').style.display = "none";
+				document.getElementById('exitProfil').style.display = "none";
+				$('#chatWindow').fadeIn();
+				$('#message').fadeIn();			
+		}
+
 		function hexToRgba(hex, opacity){
 		    var c;
 		    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
@@ -553,7 +599,7 @@
 				var html = '';
 				for(i = 0; i < data.length; i++)
 				{
-					html += '<li class="list-group-item" id="' + data[i] + '">' + escapeHtml(data[i]) + '</li>';
+					html += '<button class="list-group-item" id="' + data[i] + '" onclick="userInfo(this.id)">' + escapeHtml(data[i]) + '</button>';
 				}
 				$users.html(html);
 			});

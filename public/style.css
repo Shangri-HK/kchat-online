@@ -145,7 +145,7 @@
 			width: 25px;
 			height: auto;
 		}
-		#chatWindow
+		.chatWindow
 		{
 			background: rgba(204, 204, 204, 0.4) none repeat scroll 0 0 / 360px 600px;
 		    height: 600px;
@@ -329,4 +329,45 @@
 			font-family: 'Courier New', Courier, monospace;
 			font-size: 13px;
 			color: white;
+		}
+		.userInfo
+		{
+			background: rgba(25, 25, 25, 0.7);
+			overflow: auto;
+			height: 600px;
+			border-radius: 0 10px 0 20px;
+			padding: 0 !important;
+		}
+		.infoList
+		{
+			background: rgba(250, 250, 250, 0.4);
+			width:100%;
+			margin-top: 20px;
+
+		}
+		.detailInfo
+		{
+			color: white;
+			overflow: hidden;
+		}
+		.detailInfo a
+		{
+			color: white;
+		}
+		.profil
+		{
+			background: rgba(25, 25, 25, 0.8);
+		}
+		#userAvatar
+		{
+			margin-top: 15px;
+			border: solid 1px #191919;
+		}
+		#exitProfil
+		{
+			margin-top: 10px;
+		    border-radius: 0 10px 0 20px;
+		    border: solid 1px #191919;
+		    background: rgba(25, 25, 25, 0.4);
+		    width: 100%;
 		}

@@ -34,6 +34,12 @@ io.sockets.on('connection', function(socket){
 	//this.transport.close();
 	 //});
 
+	 socket.on('user info', function(name, avatar, color, glow)
+	 {
+	 	io.sockets.emit('get user info', {name: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow});
+	 });
+
+	 
 	//Send Message
 	socket.on('send message', function(data, avatar, color, glow, add){
 		if (add)
