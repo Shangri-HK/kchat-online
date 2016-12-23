@@ -87,11 +87,11 @@ io.sockets.on('connection', function(socket){
 		id = pc[0] + pc[1];
 		if (pcid.indexOf(id) == -1)
 		{
-			html.push('<li class="list-group-item affichage color"><img src="' + socket.avatar + '" id="avatar" class="color"/><span style="color:'  + ';'  + '">'  + '</span><br /><strong>' + data.msg  +'</strong></li>');
+			html.push('<li class="list-group-item affichage color"><img src="' + socket.avatar + '" id="avatar" class="color"/><span style="color:' + socket.color + ';' + returnGlow(socket.glow) + '">' + socket.username + '</span><br /><strong>' + data.msg  +'</strong></li>');
 			pcid.push(id);
 		}
 		else
-			html[pcid.indexOf(id)] = html[pcid.indexOf(id)] + '<li class="list-group-item affichage color"><img src="' + socket.avatar + '" id="avatar" class="color"/><span style="color:'  + ';'  + '">'  + '</span><br /><strong>' + data.msg  +'</strong></li>';
+			html[pcid.indexOf(id)] = html[pcid.indexOf(id)] + '<li class="list-group-item affichage color"><img src="' + socket.avatar + '" id="avatar" class="color"/><span style="color:' + socket.color + ';' + returnGlow(socket.glow) + '">' + socket.username + '</span><br /><strong>' + data.msg  +'</strong></li>';
     	socket.join(id);
     	usersocket[users.indexOf(data.user)].emit('alert', {sender: socket.username});
     	io.sockets.in(id).emit('private message', {msg: data.msg, user: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow, id: id, html: html[pcid.indexOf(id)]});
@@ -117,6 +117,14 @@ io.sockets.on('connection', function(socket){
 		}
 		updateUsernames();
 	});
+
+	function returnGlow(data)
+	{
+		if (data != "")
+			return "text-shadow: 0px 0px 5px" +  data + ";"
+		else
+			return "";
+	}
 
 	function updateUsernames(){
 		io.sockets.emit('get users', users);
