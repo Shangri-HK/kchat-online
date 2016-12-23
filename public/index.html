@@ -585,7 +585,7 @@
 					if (readCookie("textStyle") == "bold")
 						$chat.append('<li class="list-group-item affichage color"><img src="' + escapeHtml(data.avatar) + '" id="avatar" class="color"/><span style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</span><br /><strong>' + text  +'</strong></li>');
 					else
-						$chat.append('<li class="list-group-item affichage color"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + text  +'</li>');
+						$chat.append('<li class="list-group-item affichage color"><img src="' + escapeHtml(data.avatar) + '" id="avatar" class="color"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + text  +'</li>');
 				}
 				else if (data.alert == 1)
 					$chat.append('<li class="list-group-item affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
