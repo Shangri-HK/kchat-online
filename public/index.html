@@ -118,8 +118,8 @@
 
 
 
-	    <div class="col-md-6 userInfo" id="userInfo" style="display:none;">
-	    	<div class="col-md-4 profil">
+	    <div class="col-md-6 userInfo" id="userInfo" style="display:none; height:auto;">
+	    	<div class="col-md-4 profil" style="overflow: hidden">
 		    	<img id="userAvatar" src="" style="width: 100%; height: 270px;"/>
 		    	<label class="infoList">Username</label><br />
 		    	<p id="usernameInfo" class="detailInfo">Name</p>
@@ -130,12 +130,24 @@
 		    	<label class="infoList">Username Glow</label><br />
 		    	<p id="usernameGlowInfo" class="detailInfo">#000000</p><br />
 	    	</div>
+	    	<div class="col-md-8" style="overflow: auto; max-height: 600px;">
+	    		<ul id="privateChat" class="list-group col-md-12 color"></ul>
+	    	</div>
 	    </div>
 	    <div class="col-md-6">
 	    	<div class="col-md-4">
 	    		<button type="button" id="exitProfil" class="btn btn-primary color" style="display:none" onclick="exitProfil();">Exit Profile</button>
 	    	</div>
+	    	<form id="privateMessageForm"  class="col-md-8" style="display:none">
+	            <div class="form-group">
+	                <textarea class="form-control" id="privateMessage"  onkeydown="isWriting()"></textarea>
+	                <br />
+	               </div>
+	    	</form>
 	    </div>
+
+
+
 	    <!-- CHAT WINDOW -->
 	    <div class="col-md-6 chatWindow" id="chatWindow">
 	        <ul id="chat" class="list-group col-md-12 color">
@@ -145,8 +157,8 @@
 	            <div class="form-group">
 	                <textarea class="form-control" id="message" onkeydown="isWriting()"></textarea>
 	                <br />
-	                </div>
-	        </form>
+	            </div>
+	    </form>
 	    <div class="col-md-2"></div>
 	</div>
 
@@ -154,8 +166,11 @@
 		var socket = io.connect();
 		var audio = new Audio('notif.mp3');
 		var $messageForm = $('#messageForm');
+		var $privateMessageForm = $('#privateMessageForm');
 		var $message = $('#message');
+		var $privateMessage = $('#privateMessage');
 		var $chat = $('#chat');
+		var $privateChat = $('#privateChat');
 		var $userForm = $('#userForm');
 		var $messageArea = $('#messageArea');
 		var $userFormArea = $('#userFormArea');
@@ -181,6 +196,7 @@
 		var avatarInfo;
 		var colorInfo;
 		var glowInfo;
+		var html;
 
 		//Setting inputs from cookies
 		$username.val(readCookie("username"));
@@ -497,20 +513,14 @@
 		function userInfo(id)
 		{
 			socket.emit('user info', id);
-			//Le souci de la fonction en bas c'est que l'affichage du profil marche, mais ça affiche pour TOUT le monde, donc il faut
-			//faire en sorte d'afficher juste pour un seul socket
-			//j'ai essayé de faire l'affichage juste en client en dehors du socket.on, mais les variables s'initialisait avec un clique de retard
-			//genre si je clique sur A, ça va rien afficher parce que les var sont null, et si je clique ensuite sur B, ça affiche le profil de A parce que les var ont été initialisés pour A juste avant, tu vois le truc ?
-
+			
 			socket.on('get user info', function(data){
 				usernameInfo = data.name;
 				avatarInfo = data.avatar;
 				colorInfo = data.color;
 				glowInfo = data.glow;
-
-
+				html = data.html;
 			});
-
 			if (isCinema == true)
 				document.getElementById('userInfo').style.height = "320px";
 			document.getElementById('chatWindow').style.display = "none";
@@ -518,6 +528,7 @@
 			document.getElementById('userAvatar').style.display = 'none';
 			document.getElementById('usernameInfo').innerHTML = "";
 			document.getElementById('usernameColorInfo').innerHTML = "";
+			document.getElementById('privateChat').innerHTML = "";
 			document.getElementById('usernameGlowInfo').innerHTML = "";
 			$('#userInfo').fadeIn();
 			$('#exitProfil').fadeIn();
@@ -526,7 +537,7 @@
 				if (isCinema == true)
 					document.getElementById('userInfo').style.height = "320px";
 				document.getElementById('chatWindow').style.display = "none";
-				$('#message').fadeOut();
+				document.getElementById('message').style.display = "none";
 				if (avatarInfo != "") {
 					document.getElementById('userAvatar').style.display = 'block';
 					document.getElementById('userAvatar').src = avatarInfo;
@@ -537,7 +548,11 @@
 				document.getElementById('avatarInfo').innerHTML = '<a href="' + avatarInfo + '" target="_blank"><strong>' + avatarInfo + '</strong></a>';
 				document.getElementById('usernameColorInfo').innerHTML = colorInfo;
 				document.getElementById('usernameGlowInfo').innerHTML = glowInfo;
+				document.getElementById(id).style.color = "initial";
+				$('#privateChat').html(html);
 				$('#userInfo').fadeIn();
+				$('#privateMessageForm').fadeIn();
+				$('#privateChat').fadeIn();
 				$('#exitProfil').fadeIn();
 			}, 1000);
 
@@ -551,16 +566,14 @@
 				socket.emit('writing', logName, true);
 			}
 			else
-				socket.emit('writing', logName, false);
-			//else
-				//document.getElementById(logName).innerHTML = $pseudo.val() + '<strong> is writing...</strong>';
-			
+				socket.emit('writing', logName, false);			
 		}
 
 		function exitProfil()
 		{
 				document.getElementById('userInfo').style.display = "none";
 				document.getElementById('exitProfil').style.display = "none";
+				document.getElementById('privateMessageForm').style.display = "none";
 				$('#chatWindow').fadeIn();
 				$('#message').fadeIn();			
 		}
@@ -587,6 +600,21 @@
 				$message.val('');
 			});
 
+			$privateMessageForm.submit(function(e){
+				e.preventDefault();
+				socket.emit('join', {user: usernameInfo, msg: $privateMessage.val()});
+				socket.emit('writing', logName, true);
+				$privateMessage.val('');
+			});
+
+			socket.on('alert', function(data){
+				document.getElementById(data.sender).style.color = "white";
+			})
+			socket.on("private message", function(data) {
+				$('#privateChat').html(data.html);
+				//$('#privateChat').append('<li class="list-group-item affichage color"><img src="' + avatarInfo + '" id="avatar" class="color"/><span style="color:'  + ';'  + '">'  + '</span><br /><strong>' + data.msg  +'</strong></li>');
+			});
+
 			socket.on('is writing', function(data)
 			{
 				if (data.stop == false)
@@ -607,7 +635,7 @@
 					if (readCookie("textStyle") == "bold")
 						$chat.append('<li class="list-group-item affichage color"><img src="' + escapeHtml(data.avatar) + '" id="avatar" class="color"/><span style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</span><br /><strong>' + text  +'</strong></li>');
 					else
-						$chat.append('<li class="list-group-item affichage color"><img src="' + escapeHtml(data.avatar) + '" id="avatar"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + text  +'</li>');
+						$chat.append('<li class="list-group-item affichage color"><img src="' + escapeHtml(data.avatar) + '" id="avatar" class="color"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + text  +'</li>');
 				}
 				else if (data.alert == 1)
 					$chat.append('<li class="list-group-item affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')
@@ -658,6 +686,15 @@
 
 		//Make the enter button send message
 		$("#message").keypress(function (e) {
+    		if(e.which == 13 && !e.shiftKey) 
+    		{        
+        		$(this).closest("form").submit();
+        		e.preventDefault();
+        		return false;
+   			}
+		});
+
+		$("#privateMessage").keypress(function (e) {
     		if(e.which == 13 && !e.shiftKey) 
     		{        
         		$(this).closest("form").submit();
