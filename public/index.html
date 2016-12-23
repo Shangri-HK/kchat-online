@@ -367,7 +367,7 @@
 		//Set the options selected
 		function changeInfo()
 		{
-			document.getElementById(logName).innerHTML = $pseudo.val();
+			//document.getElementById(logName).innerHTML = $pseudo.val();
 			if ($colorTheme.val() != "")
 				changeColor(escapeHtml($colorTheme.val()).toString());
 			if ($usernameColor.val() != "")
@@ -601,7 +601,12 @@
 
 			$privateMessageForm.submit(function(e){
 				e.preventDefault();
-				socket.emit('join', {user: usernameInfo, msg: $privateMessage.val()});
+				var privateText = $privateMessage.val();
+
+				privateText = isYoutube(privateText);
+				privateText = isImg(privateText);
+				privateText = emojis(privateText);
+				socket.emit('join', {user: usernameInfo, msg: privateText});
 				socket.emit('writing', logName, true);
 				$privateMessage.val('');
 			});
@@ -611,6 +616,10 @@
 			})
 			socket.on("private message", function(data) {
 				$('#privateChat').html(data.html);
+				x.scrollTop = x.scrollHeight;
+				audio.volume = 0.2;
+				if (readCookie("sound") == "Y")
+						audio.play();
 				//$('#privateChat').append('<li class="list-group-item affichage color"><img src="' + avatarInfo + '" id="avatar" class="color"/><span style="color:'  + ';'  + '">'  + '</span><br /><strong>' + data.msg  +'</strong></li>');
 			});
 
