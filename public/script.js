@@ -344,7 +344,7 @@ var socket = io.connect();
 			data = data.replace(":&#039;)", '<img class="emojis" src="emojis/smile2.svg" />');
 			return data;
 		}
-
+ 
 		function userInfo(id)
 		{
 			socket.emit('user info', id);
