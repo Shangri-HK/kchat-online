@@ -383,7 +383,7 @@ var socket = io.connect();
 				document.getElementById('avatarInfo').innerHTML = '<a href="' + avatarInfo + '" target="_blank"><strong>' + avatarInfo + '</strong></a>';
 				document.getElementById('usernameColorInfo').innerHTML = colorInfo;
 				document.getElementById('usernameGlowInfo').innerHTML = glowInfo;
-				document.getElementById(id).style.color = "initial";
+				document.getElementById(id).style.backgroundColor = "initial";
 				$('#privateChat').html(html);
 				$('#userInfo').fadeIn();
 				$('#privateMessageForm').fadeIn();
@@ -442,28 +442,29 @@ var socket = io.connect();
 				privateText = isYoutube(privateText);
 				privateText = isImg(privateText);
 				privateText = emojis(privateText);
+				privateText = linkify(privateText);
 				socket.emit('join', {user: usernameInfo, msg: privateText});
 				socket.emit('writing', logName, true);
 				$privateMessage.val('');
 			});
 
 			socket.on('alert', function(data){
-				document.getElementById(data.sender).style.color = "white";
 				document.getElementById(data.sender).style.background = "white";
+				document.getElementById(data.sender).style.borderRadius = "0 10px 0 20px";
 			})
 			socket.on("private message", function(data) {
 				$('#privateChat').html(data.html);
 				x.scrollTop = x.scrollHeight;
 				audio.volume = 0.2;
-				if (readCookie("sound") == "Y")
-						audio.play();
+				
+						alert(readCookie("sound"));
 				//$('#privateChat').append('<li class="list-group-item affichage color"><img src="' + avatarInfo + '" id="avatar" class="color"/><span style="color:'  + ';'  + '">'  + '</span><br /><strong>' + data.msg  +'</strong></li>');
 			});
 
 			socket.on('is writing', function(data)
 			{
 				if (data.stop == false)
-					document.getElementById(data.name).innerHTML = data.name + '<strong> is writing...</strong>';
+					document.getElementById(data.name).innerHTML = data.name + '<strong> ✎...</strong>';
 				else
 					document.getElementById(data.name).innerHTML = data.name;
 			});
@@ -473,14 +474,15 @@ var socket = io.connect();
 			socket.on('new message', function(data){
 				if (data.alert == 0){
 					var text = linkify(escapeHtml(data.msg));
-
+					var today = new Date();
+					
 					text = isYoutube(text);
 					text = isImg(text);
 					text = emojis(text);
 					if (readCookie("textStyle") == "bold")
-						$chat.append('<li class="list-group-item affichage color"><img src="' + escapeHtml(data.avatar) + '" id="avatar" class="color"/><span style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</span><br /><strong>' + text  +'</strong></li>');
+						$chat.append('<li class="list-group-item affichage color"><img src="' + escapeHtml(data.avatar) + '" id="avatar" class="color"/><span style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '   ' /*+ today*/ + '</span><span id="time"></span><br /><strong>' + text  +'</strong></li>');
 					else
-						$chat.append('<li class="list-group-item affichage color"><img src="' + escapeHtml(data.avatar) + '" id="avatar" class="color"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '</strong><br />' + text  +'</li>');
+						$chat.append('<li class="list-group-item affichage color"><img src="' + escapeHtml(data.avatar) + '" id="avatar" class="color"/><strong style="color:' + data.color + ';' + returnGlow(data.glow) + '">' + escapeHtml(data.user) + '   ' /*+ today*/ + '</strong><br />' + text  +'</li>');
 				}
 				else if (data.alert == 1)
 					$chat.append('<li class="list-group-item affichage" style="background-color: grey; height: 20px;font-size: 10px; overflow:hidden; padding-top: 2px;"><strong>' + data.user + ' is connected.<strong/>')

@@ -188,7 +188,6 @@
 		.affichage:hover
 		{
 			background: rgba(25, 25, 25, 0.4);
-			color : white;
 		}
 		#avatar
 		{
@@ -405,4 +404,8 @@
     		padding: 0;
     		color: black;
 			overflow:auto;
+		}
+		#time:hover
+		{
+			color: black;
 		}
