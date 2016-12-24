@@ -26,6 +26,8 @@
 			font-family: Arial, Helvetica, sans-serif;
 			background: url("background.jpg");
 			background-repeat: no-repeat;
+			background-size: 100% auto;
+			background-position: fixed;
 		}
 		a
 		{

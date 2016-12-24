@@ -124,7 +124,7 @@ var socket = io.connect();
    			document.getElementById('pseudo').value = escapeHtml($pseudo.val());
    			$pseudo.val(readCookie("username"));
    			$image.val(readCookie("avatar"));
-   			//$usernameColor.val(readCookie("usernameColor"));
+   			$usernameColor.val(readCookie("usernameColor"));
    			$usernameGlow.val(readCookie("usernameGlow"));
    			$background.val(readCookie("background"));
 		}
@@ -504,19 +504,20 @@ var socket = io.connect();
 					{
 						$userFormArea.hide();
 						$messageArea.fadeIn();				
-						createCookie("username", $pseudo.val());
-						createCookie("avatar", $image.val());
-						logName = $pseudo.val();
+						createCookie("username", $username.val());
+						createCookie("avatar", $avatarLink.val());
+						logName = $username.val();
 						$('#cinemaOn').fadeIn();
 						changeColor(readCookie("colorTheme"));
-						if (readCookie("background") == "")
+						
+					}
+				});
+				if (readCookie("background") == "")
 							document.getElementById('body').style.backgroundImage = "url(background.jpg)";
 						else
 							document.getElementById('body').style.backgroundImage = "url(" + readCookie("background") + ")";
-					}
-				});
 				document.getElementById('pseudo').value = $username.val();
-				$username.val('');
+				//$username.val('');
 			});
 
 			//Show the users online on the sidebar
