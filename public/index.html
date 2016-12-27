@@ -10,158 +10,189 @@
 </head>
 <body id="body">
 
-	<div id="header">
-        <a href="https://kchat-online.herokuapp.com" class="color"><img src="logo.png" id="logo"/></a>
-        <br />
-    </div>
-    <input type="submit" id="cinemaOut" class="btn btn-primary color" value="Hide cinema mode"  style="display: none;" onclick="cinemaOut()" />
-    <input type="submit" id="cinemaOn" class="btn btn-primary color" value="Show cinema mode"  style="display: none;" onclick="cinemaOn()" />
+<div id="header">
+	<a href="https://kchat-online.herokuapp.com" class="color"><img src="logo.png" id="logo"/></a>
+	<br />
+</div>
+<input type="submit" id="cinemaOut" class="btn btn-primary color" value="Hide cinema mode"  style="display: none;" onclick="cinemaOut()" />
+<input type="submit" id="cinemaOn" class="btn btn-primary color" value="Show cinema mode"  style="display: none;" onclick="cinemaOn()" />
 
 
 
-    <!-- MODE CINEMA -->
-    <div id="cinema" style="display:none;"/>
-        <iframe  id="youtubeWindow" width="1000" height="500" src="https://www.youtube.com/embed/" style="margin-top: 5px; margin-left: 118px;"></iframe><br />
-        <div id="youtubeForm">
-            <input class="form-control" id="youtubeLink" style="width:800px; float:left; margin-left: 118px; background-color: grey;"/>
-            <input type="submit" id="youtubeSubmit" class="btn btn-primary color" value="OK"  onclick="launchVideo()" />
-        </div>
-    </div>
-
-
-
-
-	<!-- LOGIN -->
-    <div id="userFormArea" class="row">
-        <div class="col-md-12">
-            <form id="userForm">
-                <div class="form-group">
-                    <label style="color: white">Enter Username</label>
-                    <input class="form-control" id="username" />
-                    <br />
-                    <label style="color: white">Avatar Link</label>
-                    <input class="form-control" id="avatarLink" /><br />
-                    <input type="submit" id="login" class="btn btn-primary buttonSelect color" style="width: 25%" value="Login" /><br />
-                </div>
-            </form>
-        </div>
-    </div>
+<!-- MODE CINEMA -->
+<div id="cinema" style="display:none;"/>
+<iframe  id="youtubeWindow" width="1000" height="500" src="https://www.youtube.com/embed/" style="margin-top: 5px; margin-left: 118px;"></iframe><br />
+<div id="youtubeForm">
+	<input class="form-control" id="youtubeLink" style="width:800px; float:left; margin-left: 118px; background-color: grey;"/>
+	<input type="submit" id="youtubeSubmit" class="btn btn-primary color" value="OK"  onclick="launchVideo()" />
+</div>
+</div>
 
 
 
 
+<!-- LOGIN -->
+<div id="userFormArea" class="row">
+	<div class="col-md-12">
+		<form id="userForm">
+			<div class="form-group">
+				<br />
+				<p style="display: none" id="errorLogin" class="alert alert-danger">
+					Sorry, bad credentials.
+				</p>
+				<label style="color: white" for="username">Enter Username</label>
+				<input class="form-control" id="username" type="text" />
+				<br />
+				<label style="color:white" for="password">Enter Password</label>
+				<input class="form-control" id="password" type="password" />
+				<br />
+				<label style="color: white" for="avatarLink">Avatar Link</label>
+				<input class="form-control" id="avatarLink" /><br />
 
-	<div class="row" id="messageArea">
-	    <div class="col-md-2"></div>
-	    <div class="col-md-2">
-	        <div class="row">
-	            <div class="col-md-1"></div>
-	            <div class="col-md-10">
+			</div>
+			<div class="row">
+				<input type="submit" id="login" class="btn btn-md btn-primary buttonSelect color" style="width: 25%" value="Login" />
+				<input type="button" id="registerButton" class="pull-right btn btn-primary buttonSelect color" style="width: 25%" value="Register" /><br />
+			</div>
+		</form>
+	</div>
+</div>
 
-
-	            	<!-- SIDEBAR -->
-	                <div class="col-md-12" id="userList">
-	                    <form class="col-md-12" id="config" style="display: none;">
-	                        <label style="color: white; margin-top: 20px;">Username</label>
-	                        <textarea class="form-control" id="pseudo" style="width: 100%"></textarea>
-	                        <label style="color: white">Avatar</label>
-	                        <textarea class="form-control" id="image" style="width: 100%"></textarea>
-	                        <label style="color: white">Username color</label>
-	                        <textarea class="form-control" id="usernameColor" style="width: 100%" placeholder="ex: #FA4D4D"></textarea>
-	                        <label style="color: white">Username Glow</label>
-	                        <textarea class="form-control" id="usernameGlow" style="width: 100%" placeholder="ex: #FA4D4D"></textarea>
-	                        <label style="color: white">Background</label>
-	                        <textarea class="form-control" id="background" style="width: 100%"></textarea>
-	                        <label style="color: white">Color Theme</label>
-	                        <textarea class="form-control" id="colorTheme" style="width: 100%" placeholder="ex: #FA4D4D"></textarea>
-	                        <div style="display: flex; width:100%; flex-wrap: wrap;">
-	                            <input type="button" id="defaultColor" style="background-color: #FA4D4D;flex-grow: 1; min-width: 25%;" onclick="changeColor('#FA4D4D')"/>
-	                            <input type="button" id="blue" style="background-color: #4F94FA;flex-grow: 1; min-width: 25%;" onclick="changeColor('#4F94FA')"/>
-	                            <input type="button" id="black" style="background-color: #191919;flex-grow: 1; min-width: 25%;" onclick="changeColor('#191919')"/>
-	                            <input type="button" id="grey" style="background-color: #9F9F9F;flex-grow: 1; min-width: 25%;" onclick="changeColor('#9F9F9F')"/>
-	                            <input type="button" id="green" style="background-color: #94FA50;flex-grow: 1; min-width: 25%;" onclick="changeColor('#94FA50')"/>
-	                            <input type="button" id="orange" style="background-color: #FAB04E;flex-grow: 1; min-width: 25%;" onclick="changeColor('#FAB04E')"/>
-	                            
-	                        </div>
-	                        <button type="button" id="sound" class="btn btn-primary buttonSelect color" onclick="soundOnOff()">Sound ON/OFF</button>
-	                        <button type="button" id="textStyle" class="btn btn-primary buttonSelect color" onclick="textBold()">Text Style</button>
-	                    </form>
-	                   
-
-
-
-	                    <!-- ONLINE USERS -->
-	                    <div class="well" id="usersCol">
-	                        <h4>Online Users</h4>
-	                        <ul class="list-group" id="users">
-
-							</ul>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-md-1"></div>
-	        </div>
-	        <div class="row">
-	            <div class="col-md-1"></div>
-	            <div class="col-md-10 text-center">
-	                <button type="button" id="settings" class="btn btn-primary color" onclick="showConfig();">Settings</button>
-	                 <input type="button" id="ok" class="btn btn-primary color" value="OK" style="display: none;" onclick="changeInfo()" />
-	            </div>
-	            <div class="col-md-1"></div>
-	        </div>
-	    </div>
+<!-- Register form -->
+<div class="row" id="registerFormArea" style="display: none">
+	<div class="col-md-12">
+		<form id="registerForm">
+			<div class="form-group">
+				<br />
+				<p class="alert alert-danger" id="errorRegister" style="display: none ">Username already taken!</p>
+				<label style="color: white" for="registerUsername">Username</label>
+				<input class="form-control" id="registerUsername" type="text">
+				<br />
+				<label style="color: white" for="registerPass">Password</label>
+				<input class="form-control" id="registerPass" type="password">
+				<br />
+				<label style="color:white" for="registerAvatar">Avatar</label>
+				<input class="form-control" id="registerAvatar" type="text">
+				<br />
+				<input type="submit" id="register" class="btn btn-primary buttonSelect color" style="width: 25%" value="Register" /><br />
+			</div>
+		</form>
+	</div>
+</div>
 
 
 
+<div class="row" id="messageArea">
+	<div class="col-md-2"></div>
+	<div class="col-md-2">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+
+
+				<!-- SIDEBAR -->
+				<div class="col-md-12" id="userList">
+					<form class="col-md-12" id="config" style="display: none;">
+						<label style="color: white; margin-top: 20px;">Username</label>
+						<textarea class="form-control" id="pseudo" style="width: 100%"></textarea>
+						<label style="color: white">Avatar</label>
+						<textarea class="form-control" id="image" style="width: 100%"></textarea>
+						<label style="color: white">Username color</label>
+						<textarea class="form-control" id="usernameColor" style="width: 100%" placeholder="ex: #FA4D4D"></textarea>
+						<label style="color: white">Username Glow</label>
+						<textarea class="form-control" id="usernameGlow" style="width: 100%" placeholder="ex: #FA4D4D"></textarea>
+						<label style="color: white">Background</label>
+						<textarea class="form-control" id="background" style="width: 100%"></textarea>
+						<label style="color: white">Color Theme</label>
+						<textarea class="form-control" id="colorTheme" style="width: 100%" placeholder="ex: #FA4D4D"></textarea>
+						<div style="display: flex; width:100%; flex-wrap: wrap;">
+							<input type="button" id="defaultColor" style="background-color: #FA4D4D;flex-grow: 1; min-width: 25%;" onclick="changeColor('#FA4D4D')"/>
+							<input type="button" id="blue" style="background-color: #4F94FA;flex-grow: 1; min-width: 25%;" onclick="changeColor('#4F94FA')"/>
+							<input type="button" id="black" style="background-color: #191919;flex-grow: 1; min-width: 25%;" onclick="changeColor('#191919')"/>
+							<input type="button" id="grey" style="background-color: #9F9F9F;flex-grow: 1; min-width: 25%;" onclick="changeColor('#9F9F9F')"/>
+							<input type="button" id="green" style="background-color: #94FA50;flex-grow: 1; min-width: 25%;" onclick="changeColor('#94FA50')"/>
+							<input type="button" id="orange" style="background-color: #FAB04E;flex-grow: 1; min-width: 25%;" onclick="changeColor('#FAB04E')"/>
+
+						</div>
+						<button type="button" id="sound" class="btn btn-primary buttonSelect color" onclick="soundOnOff()">Sound ON/OFF</button>
+						<button type="button" id="textStyle" class="btn btn-primary buttonSelect color" onclick="textBold()">Text Style</button>
+					</form>
 
 
 
 
-	    <div class="col-md-6 userInfo" id="userInfo" style="display:none; height:auto;">
-	    	<div class="col-md-4 profil" style="overflow: hidden">
-		    	<img id="userAvatar" src="" style="width: 100%; height: 270px;"/>
-		    	<label class="infoList">Username</label><br />
-		    	<p id="usernameInfo" class="detailInfo">Name</p>
-		    	<label class="infoList">Avatar Link</label><br />
-		    	<p id="avatarInfo" class="detailInfo">http://avatar</p>
-		    	<label class="infoList">Username Color</label><br />
-		    	<p id="usernameColorInfo" class="detailInfo">#000000</p>
-		    	<label class="infoList">Username Glow</label><br />
-		    	<p id="usernameGlowInfo" class="detailInfo">#000000</p><br />
-	    	</div>
-	    	<div class="col-md-8" style="overflow: auto; max-height: 600px;">
-	    		<ul id="privateChat" class="list-group col-md-12 color"></ul>
-	    	</div>
-	    </div>
-	    <div class="col-md-6">
-	    	<div class="col-md-4">
-	    		<button type="button" id="exitProfil" class="btn btn-primary color" style="display:none" onclick="exitProfil();">Exit Profile</button>
-	    	</div>
-	    	<form id="privateMessageForm"  class="col-md-8" style="display:none">
-	            <div class="form-group">
-	                <textarea class="form-control" id="privateMessage"  onkeydown="isWriting()"></textarea>
-	                <br />
-	               </div>
-	    	</form>
-	    </div>
+					<!-- ONLINE USERS -->
+					<div class="well" id="usersCol">
+						<h4>Online Users</h4>
+						<ul class="list-group" id="users">
 
-
-
-	    <!-- CHAT WINDOW -->
-	    <div class="col-md-6 chatWindow" id="chatWindow">
-	        <ul id="chat" class="list-group col-md-12 color">
-	        </ul>
-	    </div>
-	    <form id="messageForm"  class="col-md-6">
-	            <div class="form-group">
-	                <textarea class="form-control" id="message" onkeydown="isWriting()"></textarea>
-	                <br />
-	            </div>
-	    </form>
-	    <div class="col-md-2"></div>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10 text-center">
+				<button type="button" id="settings" class="btn btn-primary color" onclick="showConfig();">Settings</button>
+				<input type="button" id="ok" class="btn btn-primary color" value="OK" style="display: none;" onclick="changeInfo()" />
+			</div>
+			<div class="col-md-1"></div>
+		</div>
 	</div>
 
-	<script type="text/javascript" src="script.js"></script>
-	<script type="text/javascript" src="main.js"></script>
+
+
+
+
+
+
+	<div class="col-md-6 userInfo" id="userInfo" style="display:none; height:auto;">
+		<div class="col-md-4 profil" style="overflow: hidden">
+			<img id="userAvatar" src="" style="width: 100%; height: 270px;"/>
+			<label class="infoList">Username</label><br />
+			<p id="usernameInfo" class="detailInfo">Name</p>
+			<label class="infoList">Avatar Link</label><br />
+			<p id="avatarInfo" class="detailInfo">http://avatar</p>
+			<label class="infoList">Username Color</label><br />
+			<p id="usernameColorInfo" class="detailInfo">#000000</p>
+			<label class="infoList">Username Glow</label><br />
+			<p id="usernameGlowInfo" class="detailInfo">#000000</p><br />
+		</div>
+		<div class="col-md-8" style="overflow: auto; max-height: 600px;">
+			<ul id="privateChat" class="list-group col-md-12 color"></ul>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="col-md-4">
+			<button type="button" id="exitProfil" class="btn btn-primary color" style="display:none" onclick="exitProfil();">Exit Profile</button>
+		</div>
+		<form id="privateMessageForm"  class="col-md-8" style="display:none">
+			<div class="form-group">
+				<textarea class="form-control" id="privateMessage"  onkeydown="isWriting()"></textarea>
+				<br />
+			</div>
+		</form>
+	</div>
+
+
+
+	<!-- CHAT WINDOW -->
+	<div class="col-md-6 chatWindow" id="chatWindow">
+		<ul id="chat" class="list-group col-md-12 color">
+		</ul>
+	</div>
+	<form id="messageForm"  class="col-md-6">
+		<div class="form-group">
+			<textarea class="form-control" id="message" onkeydown="isWriting()"></textarea>
+			<br />
+		</div>
+	</form>
+	<div class="col-md-2"></div>
+</div>
+
+<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="main.js"></script>
 </body>
 </html>

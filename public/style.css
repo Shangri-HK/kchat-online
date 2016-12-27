@@ -43,7 +43,8 @@
 			display: none;
 			width: 100%;
 		}
-		#userFormArea
+		#userFormArea,
+		#registerFormArea
 		{
 			background: rgba(204,204,204,0.4);
 			
