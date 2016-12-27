@@ -19,14 +19,16 @@ console.log('Server running...');
 
 //Mysql Connection
 var connection = mysql.createConnection({
-	host: 'thehiddenride420.mysql.db',
-	user: 'thehiddenride420',
-	password: 'Uskxkqbl4862',
-	database: 'thehiddenride420'
+	host: 'sql7.freesqldatabase.com',
+	user: 'sql7151225',
+	password: 'eAAvdHtXSN',
+	database: 'sql7151225'
 });
-
-connection.connect();
-
+//var connection = mysql.createConnection(
+//	'mysql://thehiddenr:FireAce32@85.10.205.173'
+//);
+var res = connection.connect();
+console.log(res);
 //End Mysql Connection
 
 app.get('/', function(req, res){
