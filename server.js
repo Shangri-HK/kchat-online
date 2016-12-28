@@ -25,7 +25,7 @@ var connection = mysql.createConnection({
 	database: 'sql7151225'
 });
 //var connection = mysql.createConnection(
-//	'mysql://thehiddenr:FireAce32@85.10.205.173'
+//	'mysql://sql7151225:eAAvdHtXSN@sql7.freesqldatabase.com'
 //);
 var res = connection.connect();
 console.log(res);
