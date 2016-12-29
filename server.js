@@ -127,7 +127,6 @@ io.sockets.on('connection', function(socket){
 			if (err) { //if there is an error in the mysql query
 				callback(false);
 			} else {
-				console.log('ninja');
 				if (rows.length != 0) {
 					//if username & password are good, callback true, user connected
 					if (rows[0]['username'] == data && rows[0]['user_password'] == password) {
@@ -139,12 +138,12 @@ io.sockets.on('connection', function(socket){
 						socket.color = color;
 						socket.glow = glow;
 
-							io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow, alert: 1});
-							avatars.push(socket.avatar);
-							colors.push(socket.color);
-							glows.push(socket.glow);
-							users.push(socket.username);
-							usersocket.push(socket);
+						io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow, alert: 1});
+						avatars.push(socket.avatar);
+						colors.push(socket.color);
+						glows.push(socket.glow);
+						users.push(socket.username);
+						usersocket.push(socket);
 
 						updateUsernames();
 
