@@ -127,11 +127,27 @@ io.sockets.on('connection', function(socket){
 			if (err) { //if there is an error in the mysql query
 				callback(false);
 			} else {
+				console.log('ninja');
 				if (rows.length != 0) {
 					//if username & password are good, callback true, user connected
 					if (rows[0]['username'] == data && rows[0]['user_password'] == password) {
 						console.log('user connected as : ', rows[0]['username']);
 						callback(true);
+
+						socket.username = data;
+						socket.avatar = avatar;
+						socket.color = color;
+						socket.glow = glow;
+
+							io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow, alert: 1});
+							avatars.push(socket.avatar);
+							colors.push(socket.color);
+							glows.push(socket.glow);
+							users.push(socket.username);
+							usersocket.push(socket);
+
+						updateUsernames();
+
 					} else {
 						//if wrong credentials (usually, this condition will not be used)
 						console.error("user failed to login with credentials: " + data + " : " + password);
@@ -139,25 +155,15 @@ io.sockets.on('connection', function(socket){
 					}
 				} else {
 					//if wrong credentials (0 db return)
+					callback(false);
 					console.error("user failed to login with credentials: " + data + " : " + password);
 				}
 			}
 		});
 
+		console.log("add = " + add);
 
-		socket.username = data;
-		socket.avatar = avatar;
-		socket.color = color;
-		socket.glow = glow;
-		if(add){
-			io.sockets.emit('new message', {msg: data, user: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow, alert: 1});
-			avatars.push(socket.avatar);
-			colors.push(socket.color);
-			glows.push(socket.glow);
-			users.push(socket.username);
-			usersocket.push(socket);
-		}
-		updateUsernames();
+
 	});
 
 	//new register
@@ -189,25 +195,25 @@ io.sockets.on('connection', function(socket){
 						callback(false);
 						console.error(err);
 					} else {
+						socket.username = username;
+						socket.avatar = avatar;
+						socket.glow = "";
+						socket.color = "";
 
+						//io.sockets.emit('new message', {msg: username, user: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow, alert: 1});
+						//avatars.push(socket.avatar);
+						//colors.push(socket.color);
+						//glows.push(socket.glow);
+						//users.push(socket.username);
+						//usersocket.push(socket);
+						//updateUsernames();
 						console.log('succes');
 					}
 
 				});
 			}
 
-			socket.username = username;
-			socket.avatar = avatar;
-			socket.glow = "";
-			socket.color = "";
 
-			io.sockets.emit('new message', {msg: username, user: socket.username, avatar: socket.avatar, color: socket.color, glow: socket.glow, alert: 1});
-			avatars.push(socket.avatar);
-			colors.push(socket.color);
-			glows.push(socket.glow);
-			users.push(socket.username);
-			usersocket.push(socket);
-			updateUsernames();
 		});
 		});
 

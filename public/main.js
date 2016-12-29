@@ -75,10 +75,14 @@ $(document).ready(function() {
 
     socket.on('is writing', function(data)
     {
-        if (data.stop == false)
-            document.getElementById(data.name).innerHTML = data.name + '<strong> ✎...</strong>';
-        else
-            document.getElementById(data.name).innerHTML = data.name;
+        if (data.stop == false) {
+            if (data.name != null)
+                document.getElementById(data.name).innerHTML = data.name + '<strong> ✎...</strong>';
+        }
+        else {
+            if (data.name != null)
+                document.getElementById(data.name).innerHTML = data.name;
+        }
     });
 
 
@@ -131,7 +135,7 @@ $(document).ready(function() {
             document.getElementById('body').style.backgroundImage = "url(background.jpg)";
         else
             document.getElementById('body').style.backgroundImage = "url(" + readCookie("background") + ")";
-        document.getElementById('pseudo').value = $username.val();
+        //document.getElementById('pseudo').value = $username.val();
         //$username.val('');
     });
 

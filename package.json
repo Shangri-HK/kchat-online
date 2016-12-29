@@ -12,6 +12,6 @@
   "dependencies":{
     "socket.io":"*",
     "express":"*",
-    "mysql":"^2.5.4" 
+    "mysql":"^2.5.4"
   }
 }
