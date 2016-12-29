@@ -18,17 +18,21 @@ server.listen(process.env.PORT ||3000);
 console.log('Server running...');
 
 //Mysql Connection
-var connection = mysql.createConnection({
-	host: 'sql7.freesqldatabase.com',
-	user: 'sql7151225',
-	password: 'eAAvdHtXSN',
-	database: 'sql7151225'
-});
-//var connection = mysql.createConnection(
-//	'mysql://sql7151225:eAAvdHtXSN@sql7.freesqldatabase.com'
-//);
-var res = connection.connect();
-console.log(res);
+
+
+try {
+	var connection = mysql.createConnection({
+		host: 'sql7.freesqldatabase.com',
+		user: 'sql7151225',
+		password: 'eAAvdHtXSN',
+		database: 'sql7151225'
+	});
+	connection.connect();
+} catch(Exception) {
+	console.log(Exception);
+}
+
+console.log("Mysql is running...");
 //End Mysql Connection
 
 app.get('/', function(req, res){
