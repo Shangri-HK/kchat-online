@@ -176,11 +176,11 @@ io.sockets.on('connection', function(socket){
 				registered = false;
 			} else {
 				if (rows.length != 0) {
-					console.log("rows"+rows);
+					//console.log("rows"+rows);
 					callback(false);
 					registered = false;
 				} else {
-					console.log('here: ' + registered);
+					//console.log('here: ' + registered);
 					callback(true);
 					registered = true;
 				}
@@ -189,7 +189,7 @@ io.sockets.on('connection', function(socket){
 			console.log(registered);
 
 			if (registered == true) {
-				connection.query('INSERT INTO kchat_users VALUES("", "'+username+'", "'+password+'")', function(err) {
+				connection.query('INSERT INTO kchat_users VALUES("", "'+username+'", "'+password+'", "", "", "")', function(err) {
 					if (err) {
 						callback(false);
 						console.error(err);
