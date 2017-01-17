@@ -22,10 +22,10 @@ console.log('Server running...');
 
 try {
 	var connection = mysql.createConnection({
-		host: 'sql7.freesqldatabase.com',
-		user: 'sql7151225',
-		password: 'eAAvdHtXSN',
-		database: 'sql7151225'
+		host: '37.59.125.153',
+		user: 'AloeaH5682',
+		password: 'If78jW70kf',
+		database: 'AloeaH5682'
 	});
 	connection.connect();
 } catch(Exception) {
