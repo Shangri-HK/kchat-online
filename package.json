@@ -9,12 +9,12 @@
   },
   "author": "Kipouche",
   "license": "ISC",
-  "dependencies":{
-    "socket.io":"*",
-    "express":"*",
-    "mysql":"^2.5.4"
+  "dependencies": {
+    "socket.io": "*",
+    "express": "*",
+    "mysql": "^2.5.4"
   },
   "engines": {
-   "node": "8.10.0"
+    "node": "8.10.0"
   }
 }
