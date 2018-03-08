@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function() {
+	console.log('Start');
     var socket = io.connect();
     var audio = new Audio('notif.mp3');
     var $messageForm = $('#messageForm');
