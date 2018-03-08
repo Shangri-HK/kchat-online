@@ -21,7 +21,7 @@ console.log('Server running...');
 
 
 try {
-	var connection = mysql.createConnection({
+	var connection = mysql.createClient({
 		host: '46.105.57.169',
 		user: 'thehiddenride420',
 		password: 'Uskxkqbl4862',
