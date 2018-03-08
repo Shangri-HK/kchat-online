@@ -118,7 +118,7 @@ $(document).ready(function() {
     	console.log('here x');
         e.preventDefault();
         socket.emit('new user', $username.val(), $('#password').val(), $avatarLink.val(), readCookie("usernameColor"), readCookie("usernameGlow"), true, function(data){
-            console.log(data);
+            console.log("data from login : " + data);
             if(data == true)
             {
                 $userFormArea.hide();
