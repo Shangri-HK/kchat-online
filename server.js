@@ -192,6 +192,7 @@ io.sockets.on('connection', function(socket){
 
 			if (registered == true) {
 				connection.query('INSERT INTO kchat_users VALUES("", "'+username+'", "'+password+'", "", "", "")', function(err) {
+					if (err) throw err;
 					if (err) {
 						callback(false);
 						console.error(err);
