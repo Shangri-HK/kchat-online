@@ -184,7 +184,7 @@ io.sockets.on('connection', function(socket){
 					callback(false);
 					registered = false;
 				} else {
-					//console.log('here: ' + registered);
+					console.log('here: ' + registered);
 					callback(true);
 					registered = true;
 				}
