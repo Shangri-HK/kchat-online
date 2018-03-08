@@ -167,7 +167,7 @@ io.sockets.on('connection', function(socket){
 
 	//new register
 	socket.on('register user', function(username, password, avatar, callback) {
-		console.log('here');
+		console.log('here Ya');
 		var  registered = false;
 		//check if username if not taken
 		connection.query('SELECT * from kchat_users WHERE username = "'+username+'"', function(err, rows, fields){
