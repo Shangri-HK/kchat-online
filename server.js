@@ -171,7 +171,7 @@ io.sockets.on('connection', function(socket){
 		var  registered = false;
 		//check if username if not taken
 		connection.query('SELECT * from kchat_users WHERE username = "'+username+'"', function(err, rows, fields){
-			console.log('XD');
+			console.log(err);
 			if (err) {
 				console.log('error here');
 				callback(false);
