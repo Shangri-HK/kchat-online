@@ -22,14 +22,10 @@ console.log('Server running...');
 
 try {
 	var connection = mysql.createConnection({
-		//host: '37.59.125.153',
 		host: '46.105.57.169',
-		//user: 'AloeaH5682',
 		user: 'thehiddenride420',
-		//password: 'If78jW70kf',
 		password: 'Uskxkqbl4862',
-		//database: 'AloeaH5682'
-		database: 'thehiddenride420',	
+		database: 'thehiddenride420'
 	});
 	connection.connect();
 } catch(Exception) {
