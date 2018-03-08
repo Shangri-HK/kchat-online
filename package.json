@@ -9,9 +9,9 @@
   },
   "author": "Kipouche",
   "license": "ISC",
-  "dependencies": {
-    "express": "*",
-    "mysql": "file:node_modules/mysql",
-    "socket.io": "*"
+  "dependencies":{
+    "socket.io":"*",
+    "express":"*",
+    "mysql":"^2.5.4"
   }
 }
