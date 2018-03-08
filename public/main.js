@@ -114,6 +114,7 @@ $(document).ready(function() {
 
     //Add the user's informations at login
     $("#login").click(function(e){
+    	console.log('here x');
         e.preventDefault();
         socket.emit('new user', $username.val(), $('#password').val(), $avatarLink.val(), readCookie("usernameColor"), readCookie("usernameGlow"), true, function(data){
             console.log(data);
