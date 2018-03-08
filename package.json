@@ -13,5 +13,8 @@
     "socket.io":"*",
     "express":"*",
     "mysql":"^2.5.4"
+  },
+  "engines": {
+   "node": "8.10.0"
   }
 }
